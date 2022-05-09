@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:gw/config/palette.dart';
+import 'package:RouF/config/palette.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:gw/screens/main_screen.dart';
+import 'package:RouF/screens/main_screen.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:gw/globals.dart' as globals;
+import 'package:RouF/globals.dart' as globals;
 
 class LoginSignupScreen extends StatefulWidget {
   const LoginSignupScreen({Key? key}) : super(key: key);

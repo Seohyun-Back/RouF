@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:gw/globals.dart' as globals;
+import 'package:RouF/globals.dart' as globals;
 
 import '../../config/palette.dart';
 

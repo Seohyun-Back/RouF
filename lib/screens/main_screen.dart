@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-//import 'package:gw/component/add_task.dart';
+//import 'package:RouF/component/add_task.dart';
 //import 'package:flutterfire_ui/auth.dart';
-import 'package:gw/screens/sidebar/friend_request.dart';
+import 'package:RouF/screens/sidebar/friend_request.dart';
 //import 'package:intl/intl.dart';
-import 'package:gw/globals.dart' as globals;
+import 'package:RouF/globals.dart' as globals;
 import '../component/task_list.dart';
 
 import '../component/add_task.dart';

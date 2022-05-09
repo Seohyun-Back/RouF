@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gw/globals.dart' as globals;
+import 'package:RouF/globals.dart' as globals;
 import '../component/task.dart';
 
 class TaskList extends StatefulWidget {

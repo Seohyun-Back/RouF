@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'detailed_list.dart';
-import 'package:gw/globals.dart' as globals;
+import 'stopwatch.dart';
+import 'package:RouF/globals.dart' as globals;
 
 class Task extends StatefulWidget {
   final int taskNum;
@@ -19,7 +20,7 @@ class _TaskState extends State<Task> {
         children: [
           Center(
             child: Container(
-              padding: EdgeInsets.fromLTRB(20, 17, 20, 17),
+              padding: EdgeInsets.fromLTRB(20, 10, 5, 17),
               width: 300,
               //height: 150,
               decoration: BoxDecoration(
@@ -44,11 +45,25 @@ class _TaskState extends State<Task> {
                         //     'assets/images/TaskIcon/${globals.tasks[globals.taskList[widget.taskNum]]}.png'),
                       ),
                       SizedBox(width: 10),
-                      Text(
-                        globals.tasks[globals.taskList[widget.taskNum]],
-                        style: TextStyle(fontSize: 15),
+                      Container(
+                        width: 50,
+                        child: Text(
+                          globals.tasks[globals.taskList[widget.taskNum]],
+                          style: TextStyle(fontSize: 15),
+                        ),
                       ),
+                      // IconButton(
+                      //   onPressed: () {
+                      //     print("play button is clicked");
+
+                      //   },
+                      //   icon: Icon(Icons.play_arrow),
+                      //   iconSize: 17,
+                      // ),
+                      //SizedBox(width: 50), // timer
+                      StopwatchPage(),
                       IconButton(
+                        alignment: Alignment.topRight,
                         onPressed: () {
                           print("task add button is clicked");
                           setState(() {

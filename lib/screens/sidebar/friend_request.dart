@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:gw/screens/sidebar/printSearchedFriend.dart';
-import 'package:gw/globals.dart' as globals;
+import 'package:RouF/screens/sidebar/printSearchedFriend.dart';
+import 'package:RouF/globals.dart' as globals;
 
 import '../../config/palette.dart';
 

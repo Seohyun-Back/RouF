@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gw/globals.dart' as globals;
+import 'package:RouF/globals.dart' as globals;
 
 class Details extends StatefulWidget {
   final int taskIndex;
@@ -15,18 +15,35 @@ class Details extends StatefulWidget {
 class _DetailsState extends State<Details> {
   @override
   Widget build(BuildContext context) {
+    print("detials 호출됨");
     return Container(
-        decoration: BoxDecoration(
-          color: Color(0xfff4f4f4),
-        ),
+        // decoration: BoxDecoration(
+        //   color: Color(0xfff4f4f4),
+        // ),
         child: Row(
-          children: [
-            Text(globals.detailedList[widget.taskIndex][widget.detailedIndex]
-                .toString()),
-            TextFormField(
-              decoration: InputDecoration(hintText: "입력하세요"),
-            )
-          ],
-        ));
+      children: [
+        Container(
+          child: Text(globals.detailedList[widget.taskIndex]
+                      [widget.detailedIndex]
+                  .toString() +
+              "  "),
+        ),
+        Container(
+          height: 40,
+          width: 240,
+          child: TextFormField(
+            style: TextStyle(
+              fontSize: 12,
+            ),
+            decoration: InputDecoration(
+              fillColor: Color(0xfff4f4f4),
+              //contentPadding: const EdgeInsets.symmetric(vertical: 40.0),
+              contentPadding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+              hintText: "입력하세요",
+            ),
+          ),
+        )
+      ],
+    ));
   }
 }

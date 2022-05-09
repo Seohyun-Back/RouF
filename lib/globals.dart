@@ -1,10 +1,10 @@
-library gw.globals;
+library RouF.globals;
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/auth.dart';
-import 'package:gw/component/add_task.dart';
+import 'package:RouF/component/add_task.dart';
 
 var currentUser = FirebaseAuth.instance.currentUser;
 String currentUsername = '';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'details.dart';
-import 'package:gw/globals.dart' as globals;
+import 'package:RouF/globals.dart' as globals;
 
 class DetailedList extends StatefulWidget {
   final int index;
@@ -13,13 +13,14 @@ class DetailedList extends StatefulWidget {
 class _DetailedListState extends State<DetailedList> {
   @override
   Widget build(BuildContext context) {
+    print("detailed_list 호출됨");
     return Container(
       // decoration: BoxDecoration(
       //   color: Color(0xfff4f4f4),
       // ),
       //height: 370,
-      padding: EdgeInsets.symmetric(vertical: 10),
-      color: Colors.white,
+      //padding: EdgeInsets.symmetric(vertical: 10),
+      color: Color(0xfff4f4f4),
       child: Expanded(
         child: ListView.builder(
           shrinkWrap: true,
