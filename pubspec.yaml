@@ -81,7 +81,7 @@ flutter:
     - assets/images/TaskIcon/이동.png
     - assets/images/TaskIcon/일하기.png
     - assets/images/TaskIcon/밥먹기.png
-    - assets/images/TaskIcon/직접 추가.png
+    - assets/images/TaskIcon/기타.png
     
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

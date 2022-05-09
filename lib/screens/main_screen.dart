@@ -397,7 +397,9 @@ class _MainScreenState extends State<MainScreen> {
                             Navigator.pop(dialogContext);
                             globals.statusKey = i;
                             setState(() {
-                              globals.taskList.add(i);
+                              globals.taskList.contains(i)
+                                  ? print("추가 안할거임")
+                                  : globals.taskList.add(i);
                             });
 
                             //print(globals.statusKey);
@@ -431,7 +433,12 @@ class _MainScreenState extends State<MainScreen> {
                               Navigator.pop(dialogContext);
                               globals.statusKey = i;
                               setState(() {
-                                globals.taskList.add(i);
+                                globals.taskList.contains(i)
+                                    ? Scaffold.of(context)
+                                        .showSnackBar(SnackBar(
+                                        content: Text("이미 추가된 카테고리입니다."),
+                                      ))
+                                    : globals.taskList.add(i);
                               });
                             },
                           ),

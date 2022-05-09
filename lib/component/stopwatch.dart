@@ -65,7 +65,7 @@ class _StopwatchPageState extends State<StopwatchPage> {
       //appBar: AppBar(title: Text('Stopwatch Example')),
       child: Center(
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
             IconButton(
               onPressed: () {
@@ -73,7 +73,7 @@ class _StopwatchPageState extends State<StopwatchPage> {
                 handleStartStop();
               },
               icon: Icon(_stopwatch.isRunning ? Icons.pause : Icons.play_arrow),
-              iconSize: 17,
+              iconSize: 15,
             ),
             Text(formatTime(_stopwatch.elapsedMilliseconds),
                 style: TextStyle(fontSize: 15.0)),
