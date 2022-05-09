@@ -51,6 +51,7 @@ List<List<Todo>> todos = [
 ];
 String input = '';
 List<int> taskList = [];
+List<String> eachTaskTimer = ["", "", "", "", "", "", "", ""];
 
 int statusKey = 8;  // 기본 숨쉬기 상태
 

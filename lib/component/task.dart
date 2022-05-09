@@ -152,7 +152,10 @@ class _TaskState extends State<Task> {
                         // ),
                         //SizedBox(width: 50), // timer
 
-                        StopwatchPage(),
+                        StopwatchPage(
+                          index: widget.taskNum,
+                          taskKey: globals.taskList[widget.taskNum],
+                        ),
                       ],
                     ),
                     DetailedList(index: widget.taskNum),

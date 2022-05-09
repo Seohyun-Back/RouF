@@ -1,12 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-//import 'package:RouF/component/add_task.dart';
-//import 'package:flutterfire_ui/auth.dart';
 import 'package:RouF/screens/sidebar/friend_request.dart';
-//import 'package:intl/intl.dart';
+import 'package:RouF/screens/sidebar/friend_list.dart';
 import 'package:RouF/globals.dart' as globals;
 import '../component/task_list.dart';
+import '../component/stopwatch.dart';
 
 import '../component/add_task.dart';
 import 'calendar_screen.dart';
@@ -112,6 +111,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(50.0), // AppBar 사이즈 지정
@@ -135,120 +135,154 @@ class _MainScreenState extends State<MainScreen> {
             children: <Widget>[
               DrawerHeader(
                 child: Container(
-                    child: Column(
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          flex: 2,
-                          child: CircleAvatar(
-                            radius: 50,
-                            backgroundImage:
-                                AssetImage('assets/images/profile1.jpg'),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 8,
-                          child: Container(
-                            padding: EdgeInsets.fromLTRB(10, 25, 0, 0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                FutureBuilder(
-                                    future: getUserName(),
-                                    builder: (BuildContext context,
-                                        AsyncSnapshot snapshot) {
-                                      if (snapshot.hasData == false) {
-                                        return CircularProgressIndicator();
-                                      } else if (snapshot.hasError) {
-                                        return Text(
-                                          'Error: ${snapshot.error}',
-                                        );
-                                      } else {
-                                        return Text(
-                                          snapshot.data.toString(),
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        );
-                                      }
-                                    }),
-                                FutureBuilder(
-                                    future: getUserEmail(),
-                                    builder: (BuildContext context,
-                                        AsyncSnapshot snapshot) {
-                                      if (snapshot.hasData == false) {
-                                        return CircularProgressIndicator();
-                                      } else if (snapshot.hasError) {
-                                        return Text(
-                                          'Error: ${snapshot.error}',
-                                        );
-                                      } else {
-                                        return Text(snapshot.data.toString(),
-                                            style: TextStyle(
-                                                //color: Colors.white,
-                                                ));
-                                      }
-                                    }),
-                                // StreamBuilder(
-                                //   stream: FirebaseFirestore.instance
-                                //       .collection(
-                                //           'user/${globals.currentUid}/friends')
-                                //       .snapshots(),
-                                //   builder: (BuildContext context,
-                                //       AsyncSnapshot<dynamic> snapshot) {
-                                //     if (snapshot.connectionState ==
-                                //         ConnectionState.waiting) {
-                                //       return Center(
-                                //         child: CircularProgressIndicator(),
-                                //       );
-                                //     }
-                                //     final docs = snapshot.data!.docs;
-                                //     return TextButton(
-                                //       onPressed: () {
-                                //         print('친구 목록 창으로 넘어갈거임~');
-                                //       },
-                                //       child: Text('친구 ${docs.length.toString()}',
-                                //           style: TextStyle(
-                                //             color: Colors.black,
-                                //             fontSize: 11,
-                                //           )),
-                                //     );
-                                //   },
-                                // ),
-                              ],
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                      Text(
-                        '친구 ',
-                        style: TextStyle(
-                          fontSize: 16,
+                    child: Column(children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: CircleAvatar(
+                          radius: 50,
+                          backgroundImage:
+                              AssetImage('assets/images/profile1.jpg'),
                         ),
                       ),
-                      FutureBuilder(
-                          future: getFriendNum(),
-                          builder:
-                              (BuildContext context, AsyncSnapshot snapshot) {
-                            if (snapshot.hasError) {
-                              return Text(
-                                'Error: ${snapshot.error}',
-                              );
-                            } else {
-                              return Text(snapshot.data.toString(),
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                  ));
-                            }
-                          }),
-                    ]),
-                  ],
-                )),
+                      Expanded(
+                        flex: 8,
+                        child: Container(
+                          padding: EdgeInsets.fromLTRB(10, 25, 0, 0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              FutureBuilder(
+                                  future: getUserName(),
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot snapshot) {
+                                    if (snapshot.hasData == false) {
+                                      return CircularProgressIndicator();
+                                    } else if (snapshot.hasError) {
+                                      return Text(
+                                        'Error: ${snapshot.error}',
+                                      );
+                                    } else {
+                                      return Text(
+                                        snapshot.data.toString(),
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      );
+                                    }
+                                  }),
+                              FutureBuilder(
+                                  future: getUserEmail(),
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot snapshot) {
+                                    if (snapshot.hasData == false) {
+                                      return CircularProgressIndicator();
+                                    } else if (snapshot.hasError) {
+                                      return Text(
+                                        'Error: ${snapshot.error}',
+                                      );
+                                    } else {
+                                      return Text(snapshot.data.toString(),
+                                          style: TextStyle(
+                                              //color: Colors.white,
+                                              ));
+                                    }
+                                  }),
+                              // StreamBuilder(
+                              //   stream: FirebaseFirestore.instance
+                              //       .collection(
+                              //           'user/${globals.currentUid}/friends')
+                              //       .snapshots(),
+                              //   builder: (BuildContext context,
+                              //       AsyncSnapshot<dynamic> snapshot) {
+                              //     if (snapshot.connectionState ==
+                              //         ConnectionState.waiting) {
+                              //       return Center(
+                              //         child: CircularProgressIndicator(),
+                              //       );
+                              //     }
+                              //     final docs = snapshot.data!.docs;
+                              //     return TextButton(
+                              //       onPressed: () {
+                              //         print('친구 목록 창으로 넘어갈거임~');
+                              //       },
+                              //       child: Text('친구 ${docs.length.toString()}',
+                              //           style: TextStyle(
+                              //             color: Colors.black,
+                              //             fontSize: 11,
+                              //           )),
+                              //     );
+                              //   },
+                              // ),
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  // Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                  //   Text(
+                  //     '친구 ',
+                  //     style: TextStyle(
+                  //       fontSize: 16,
+                  //     ),
+                  //   ),
+                  //   FutureBuilder(
+                  //       future: getFriendNum(),
+                  //       builder:
+                  //           (BuildContext context, AsyncSnapshot snapshot) {
+                  //         if (snapshot.hasError) {
+                  //           return Text(
+                  //             'Error: ${snapshot.error}',
+                  //           );
+                  //         } else {
+                  //           return Text(snapshot.data.toString(),
+                  //               style: TextStyle(
+                  //                 fontSize: 16,
+                  //               ));
+                  //         }
+                  //       }),
+                  // ]),
+                  GestureDetector(
+                    onTap: () {
+                      print('Tapped Friend List!');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) {
+                          return FriendList();
+                        }),
+                      );
+                    },
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            '친구 ',
+                            style: TextStyle(
+                              fontSize: 16,
+                            ),
+                          ),
+                          FutureBuilder(
+                              future: getFriendNum(),
+                              builder: (BuildContext context,
+                                  AsyncSnapshot snapshot) {
+                                if (snapshot.hasError) {
+                                  return Text(
+                                    'Error: ${snapshot.error}',
+                                  );
+                                } else {
+                                  return Text(snapshot.data.toString(),
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                      ));
+                                }
+                              }),
+                        ]),
+                  ),
+                ])),
                 decoration: BoxDecoration(
                     color: Colors.green[200],
                     borderRadius: BorderRadius.only(
@@ -285,7 +319,8 @@ class _MainScreenState extends State<MainScreen> {
                   color: Colors.grey[850],
                 ),
                 title: Text('로그아웃'),
-                onTap: () {
+                onTap: () async {
+                  await StopwatchPage(index: -1, taskKey: -1);
                   globals.initGlobals();
                   FirebaseAuth.instance.signOut();
                   //globals.statusKey = 8;
@@ -395,10 +430,13 @@ class _MainScreenState extends State<MainScreen> {
                           iconSize: 20,
                           onPressed: () {
                             Navigator.pop(dialogContext);
-                            globals.statusKey = i;
+                            //globals.statusKey = i;
                             setState(() {
                               globals.taskList.contains(i)
-                                  ? print("추가 안할거임")
+                                  ? ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                      content: Text("이미 추가된 카테고리입니다."),
+                                    ))
                                   : globals.taskList.add(i);
                             });
 
@@ -431,10 +469,10 @@ class _MainScreenState extends State<MainScreen> {
                             iconSize: 20,
                             onPressed: () {
                               Navigator.pop(dialogContext);
-                              globals.statusKey = i;
+                              //globals.statusKey = i;
                               setState(() {
                                 globals.taskList.contains(i)
-                                    ? Scaffold.of(context)
+                                    ? ScaffoldMessenger.of(context)
                                         .showSnackBar(SnackBar(
                                         content: Text("이미 추가된 카테고리입니다."),
                                       ))
