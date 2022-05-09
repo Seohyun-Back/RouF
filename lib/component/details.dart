@@ -22,12 +22,12 @@ class _DetailsState extends State<Details> {
         // ),
         child: Row(
       children: [
-        Container(
-          child: Text(globals.detailedList[widget.taskIndex]
-                      [widget.detailedIndex]
-                  .toString() +
-              "  "),
-        ),
+        // Container(
+        //   child: Text(globals.detailedList[widget.taskIndex]
+        //               [widget.detailedIndex]
+        //           .toString() +
+        //       "  "),
+        // ),
         Container(
           height: 40,
           width: 240,

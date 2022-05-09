@@ -9,8 +9,21 @@ import 'package:RouF/component/add_task.dart';
 var currentUser = FirebaseAuth.instance.currentUser;
 String currentUsername = '';
 String currentUid = '';
+String currentEmail = '';
 String friendName = '';
 String friendUid = '';
+String friendEmail = '';
+int friendNum = 0;
+
+void initGlobals() {
+  currentUsername = '';
+  currentUid = '';
+  currentEmail = '';
+  friendUid = '';
+  friendName = '';
+  friendEmail = '';
+  friendNum = 0;
+}
 
 List<String> tasks = ["공부", "운동", "잠자기", "일하기", "놀기", "이동", "밥먹기", "직접 추가"];
 //List<AddTask> addTaskList = [];
@@ -27,7 +40,8 @@ List<List<int>> detailedList = [
 ];
 List<int> detailKey = [0, 0, 0, 0, 0, 0, 0, 0];
 List<Map<int, String>> details = [];
-int statusKey = 7;
+int statusKey = 8;  // 기본 숨쉬기 상태
+
 // Map<String, String> task_images = {
 //   '공부': 'study',
 //   '운동': 'exercise',

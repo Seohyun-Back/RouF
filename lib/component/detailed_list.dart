@@ -14,6 +14,8 @@ class _DetailedListState extends State<DetailedList> {
   @override
   Widget build(BuildContext context) {
     print("detailed_list 호출됨");
+    print("globals.detailedList[globals.taskList[widget.index]].length : " +
+        globals.detailedList[globals.taskList[widget.index]].length.toString());
     return Container(
       // decoration: BoxDecoration(
       //   color: Color(0xfff4f4f4),
@@ -24,14 +26,17 @@ class _DetailedListState extends State<DetailedList> {
       child: Expanded(
         child: ListView.builder(
           shrinkWrap: true,
-          itemCount: globals.detailedList[widget.index].length,
+          itemCount:
+              globals.detailedList[globals.taskList[widget.index]].length,
           itemBuilder: (context, index) {
-            if (globals.detailedList[widget.index].length == 0) {
+            if (globals.detailedList[globals.taskList[widget.index]].length ==
+                0) {
+              print("흠?");
               return SizedBox(
                 height: 0,
               );
             } else {
-              //print(globals.taskList.length);
+              print(globals.taskList.length);
               //return Details(taskNum: index);
               return Details(
                 taskIndex: widget.index,

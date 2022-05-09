@@ -80,6 +80,7 @@ class _MainScreenState extends State<MainScreen> {
 
     globals.currentUsername = _userData.data()!['userName'];
     globals.currentUid = _userData.data()!['userUID'];
+    globals.currentEmail = _userData.data()!['email'];
     //globals.statusKey = 8;
     return _userData.data()!['userName'];
   }
@@ -93,6 +94,19 @@ class _MainScreenState extends State<MainScreen> {
         await FirebaseFirestore.instance.collection('user').doc(user.uid).get();
 
     return await loggedUser!.email.toString();
+  }
+
+  Future<int> getFriendNum() async {
+    User user = await _authentication.currentUser!;
+    QuerySnapshot _myDoc = await FirebaseFirestore.instance
+        .collection('user')
+        .doc(user.uid)
+        .collection('friends')
+        .get();
+    List<DocumentSnapshot> _myDocCount = _myDoc.docs;
+    globals.friendNum = _myDocCount.length;
+    if (_myDocCount.length == 0) return 0;
+    return await _myDocCount.length;
   }
 
   @override
@@ -121,91 +135,118 @@ class _MainScreenState extends State<MainScreen> {
             children: <Widget>[
               DrawerHeader(
                 child: Container(
-                    child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                    child: Column(
                   children: [
-                    Expanded(
-                      flex: 2,
-                      child: CircleAvatar(
-                        radius: 50,
-                        backgroundImage:
-                            AssetImage('assets/images/profile1.jpg'),
-                      ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: CircleAvatar(
+                            radius: 50,
+                            backgroundImage:
+                                AssetImage('assets/images/profile1.jpg'),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 8,
+                          child: Container(
+                            padding: EdgeInsets.fromLTRB(10, 25, 0, 0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                FutureBuilder(
+                                    future: getUserName(),
+                                    builder: (BuildContext context,
+                                        AsyncSnapshot snapshot) {
+                                      if (snapshot.hasData == false) {
+                                        return CircularProgressIndicator();
+                                      } else if (snapshot.hasError) {
+                                        return Text(
+                                          'Error: ${snapshot.error}',
+                                        );
+                                      } else {
+                                        return Text(
+                                          snapshot.data.toString(),
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        );
+                                      }
+                                    }),
+                                FutureBuilder(
+                                    future: getUserEmail(),
+                                    builder: (BuildContext context,
+                                        AsyncSnapshot snapshot) {
+                                      if (snapshot.hasData == false) {
+                                        return CircularProgressIndicator();
+                                      } else if (snapshot.hasError) {
+                                        return Text(
+                                          'Error: ${snapshot.error}',
+                                        );
+                                      } else {
+                                        return Text(snapshot.data.toString(),
+                                            style: TextStyle(
+                                                //color: Colors.white,
+                                                ));
+                                      }
+                                    }),
+                                // StreamBuilder(
+                                //   stream: FirebaseFirestore.instance
+                                //       .collection(
+                                //           'user/${globals.currentUid}/friends')
+                                //       .snapshots(),
+                                //   builder: (BuildContext context,
+                                //       AsyncSnapshot<dynamic> snapshot) {
+                                //     if (snapshot.connectionState ==
+                                //         ConnectionState.waiting) {
+                                //       return Center(
+                                //         child: CircularProgressIndicator(),
+                                //       );
+                                //     }
+                                //     final docs = snapshot.data!.docs;
+                                //     return TextButton(
+                                //       onPressed: () {
+                                //         print('친구 목록 창으로 넘어갈거임~');
+                                //       },
+                                //       child: Text('친구 ${docs.length.toString()}',
+                                //           style: TextStyle(
+                                //             color: Colors.black,
+                                //             fontSize: 11,
+                                //           )),
+                                //     );
+                                //   },
+                                // ),
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
                     ),
-                    Expanded(
-                      flex: 8,
-                      child: Container(
-                        padding: EdgeInsets.fromLTRB(10, 25, 0, 0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            FutureBuilder(
-                                future: getUserName(),
-                                builder: (BuildContext context,
-                                    AsyncSnapshot snapshot) {
-                                  if (snapshot.hasData == false) {
-                                    return CircularProgressIndicator();
-                                  } else if (snapshot.hasError) {
-                                    return Text(
-                                      'Error: ${snapshot.error}',
-                                    );
-                                  } else {
-                                    return Text(
-                                      snapshot.data.toString(),
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    );
-                                  }
-                                }),
-                            FutureBuilder(
-                                future: getUserEmail(),
-                                builder: (BuildContext context,
-                                    AsyncSnapshot snapshot) {
-                                  if (snapshot.hasData == false) {
-                                    return CircularProgressIndicator();
-                                  } else if (snapshot.hasError) {
-                                    return Text(
-                                      'Error: ${snapshot.error}',
-                                    );
-                                  } else {
-                                    return Text(snapshot.data.toString(),
-                                        style: TextStyle(
-                                            //color: Colors.white,
-                                            ));
-                                  }
-                                }),
-                            // StreamBuilder(
-                            //   stream: FirebaseFirestore.instance
-                            //       .collection(
-                            //           'user/${globals.currentUid}/friends')
-                            //       .snapshots(),
-                            //   builder: (BuildContext context,
-                            //       AsyncSnapshot<dynamic> snapshot) {
-                            //     if (snapshot.connectionState ==
-                            //         ConnectionState.waiting) {
-                            //       return Center(
-                            //         child: CircularProgressIndicator(),
-                            //       );
-                            //     }
-                            //     final docs = snapshot.data!.docs;
-                            //     return TextButton(
-                            //       onPressed: () {
-                            //         print('친구 목록 창으로 넘어갈거임~');
-                            //       },
-                            //       child: Text('친구 ${docs.length.toString()}',
-                            //           style: TextStyle(
-                            //             color: Colors.black,
-                            //             fontSize: 11,
-                            //           )),
-                            //     );
-                            //   },
-                            // ),
-                          ],
+                    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                      Text(
+                        '친구 ',
+                        style: TextStyle(
+                          fontSize: 16,
                         ),
                       ),
-                    )
+                      FutureBuilder(
+                          future: getFriendNum(),
+                          builder:
+                              (BuildContext context, AsyncSnapshot snapshot) {
+                            if (snapshot.hasError) {
+                              return Text(
+                                'Error: ${snapshot.error}',
+                              );
+                            } else {
+                              return Text(snapshot.data.toString(),
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                  ));
+                            }
+                          }),
+                    ]),
                   ],
                 )),
                 decoration: BoxDecoration(
@@ -245,8 +286,9 @@ class _MainScreenState extends State<MainScreen> {
                 ),
                 title: Text('로그아웃'),
                 onTap: () {
+                  globals.initGlobals();
                   FirebaseAuth.instance.signOut();
-                  globals.statusKey = 8;
+                  //globals.statusKey = 8;
                   print("Logout is clicked");
                 },
               ),

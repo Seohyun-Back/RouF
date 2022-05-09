@@ -20,7 +20,7 @@ class _TaskState extends State<Task> {
         children: [
           Center(
             child: Container(
-              padding: EdgeInsets.fromLTRB(20, 10, 5, 17),
+              padding: EdgeInsets.fromLTRB(20, 10, 0, 17),
               width: 300,
               //height: 150,
               decoration: BoxDecoration(
@@ -69,8 +69,13 @@ class _TaskState extends State<Task> {
                           setState(() {
                             globals
                                 .detailedList[globals.taskList[widget.taskNum]]
-                                .add(globals.detailKey[widget.taskNum]++);
+                                .add(globals.detailKey[
+                                    globals.taskList[widget.taskNum]]++);
                           });
+                          print("ddddd : " +
+                              globals.detailedList[
+                                      globals.taskList[widget.taskNum]]
+                                  .toString());
                         },
                         icon: Icon(Icons.add),
                         iconSize: 17,
