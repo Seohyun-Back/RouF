@@ -6,6 +6,18 @@ import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/auth.dart';
 import 'package:RouF/component/add_task.dart';
 
+class Todo {
+  final int id; //todo마다의 고유한 ID
+  final String todo; //내가 해야할것
+  bool checked; //해당 todo를 완료 했는지 않았는지 확인하기 위한 용도
+
+  Todo({
+    required this.id,
+    required this.todo,
+    required this.checked,
+  });
+}
+
 var currentUser = FirebaseAuth.instance.currentUser;
 String currentUsername = '';
 String currentUid = '';
@@ -25,10 +37,9 @@ void initGlobals() {
   friendNum = 0;
 }
 
-List<String> tasks = ["공부", "운동", "잠자기", "일하기", "놀기", "이동", "밥먹기", "직접 추가"];
+List<String> tasks = ["공부", "운동", "잠자기", "일하기", "놀기", "이동", "밥먹기", "기타"];
 //List<AddTask> addTaskList = [];
-List<int> taskList = [];
-List<List<int>> detailedList = [
+List<List<Todo>> todos = [
   [],
   [],
   [],
@@ -38,16 +49,8 @@ List<List<int>> detailedList = [
   [],
   [],
 ];
-List<int> detailKey = [0, 0, 0, 0, 0, 0, 0, 0];
-List<Map<int, String>> details = [];
+String input = '';
+List<int> taskList = [];
+
 int statusKey = 8;  // 기본 숨쉬기 상태
 
-// Map<String, String> task_images = {
-//   '공부': 'study',
-//   '운동': 'exercise',
-//   '잠자기': 'sleep',
-//   '일하기': 'part-time',
-//   '놀기': 'friend',
-//   '이동': 'bus',
-//   '밥먹기': ''
-// };
