@@ -72,19 +72,15 @@ class _TaskState extends State<Task> {
                                             ),
                                             actions: <Widget>[
                                               FlatButton(
-                                                  onPressed: () {
-                                                    FirebaseFirestore.instance
-                                                        .collection(
-                                                            'user/${globals.currentUid}/tasks/${globals.taskList[widget.taskNum]}/todos')
-                                                        .doc(globals.input)
-                                                        .set({
-                                                      globals.input: false
-                                                    });
+                                                  onPressed: () async {
                                                     setState(() {
                                                       globals.Todo todo =
                                                           globals.Todo(
-                                                              id: widget
-                                                                  .taskNum,
+                                                              // id: globals
+                                                              //     .eachTaskKey[globals
+                                                              //         .taskList[
+                                                              //     widget
+                                                              //         .taskNum]],
                                                               todo:
                                                                   globals.input,
                                                               checked: false);
@@ -92,7 +88,31 @@ class _TaskState extends State<Task> {
                                                                   .taskList[
                                                               widget.taskNum]]
                                                           .add(todo);
+
+                                                      print(globals.eachTaskKey[
+                                                          globals.taskList[
+                                                              widget.taskNum]]);
                                                     });
+                                                    await FirebaseFirestore
+                                                        .instance
+                                                        .collection(
+                                                            'user/${globals.currentUid}/tasks/${globals.taskList[widget.taskNum]}/todos')
+                                                        .doc(globals
+                                                            .todos[globals.taskList[widget.taskNum]][globals.eachTaskKey[globals.taskList[widget.taskNum]]].todo)
+                                                        .set({
+                                                      globals.input: globals
+                                                          .todos[globals
+                                                                  .taskList[
+                                                              widget
+                                                                  .taskNum]][globals
+                                                              .eachTaskKey[globals
+                                                                  .taskList[
+                                                              widget.taskNum]]]
+                                                          .checked
+                                                    });
+                                                    globals.eachTaskKey[
+                                                        globals.taskList[
+                                                            widget.taskNum]]++;
                                                     Navigator.of(context)
                                                         .pop(); // input 입력 후 창 닫히도록
                                                   },

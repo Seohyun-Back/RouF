@@ -17,7 +17,7 @@ class _TodoListState extends State<TodoList> {
 
     return Container(
       color: Color(0xfff4f4f4),
-      child: Container(
+      child: IgnorePointer(
         child: ListView.builder(
           shrinkWrap: true,
           itemCount: globals.todos[globals.taskList[widget.index]].length,
@@ -34,9 +34,17 @@ class _TodoListState extends State<TodoList> {
                     onChanged: (newValue) async {
                       await FirebaseFirestore.instance
                           .collection(
-                              'user/${globals.currentUid}/tasks/${globals.taskList[index]}/todos')
-                          .doc(globals.input)
-                          .set({globals.input: newValue});
+                              'user/${globals.currentUid}/tasks/${globals.taskList[widget.index]}/todos')
+                          .doc(globals
+                              .todos[globals.taskList[widget.index]][index]
+                              .todo)
+                          // .doc(globals
+                          //     .eachTaskKey[globals.taskList[widget.index]]
+                          //     .toString())
+                          .set({
+                        globals.todos[globals.taskList[widget.index]][index]
+                            .todo: newValue
+                      });
 
                       setState(() {
                         globals.todos[globals.taskList[widget.index]][index]
@@ -59,28 +67,13 @@ class _TodoListState extends State<TodoList> {
                                 .todos[globals.taskList[widget.index]][index]
                                 .todo)
                             .delete();
+                        globals.eachTaskKey[globals.taskList[widget.index]]--;
                         setState(() {
                           globals.todos[globals.taskList[widget.index]]
                               .removeAt(index);
                         });
                       }));
             }
-
-            //child: Text(globals.todos[globals.taskList[widget.index]][index]),
-
-            // if (globals.todos[globals.taskList[widget.index]].length == 0) {
-            //   print("흠?");
-            //   return SizedBox(
-            //     height: 0,
-            //   );
-            // } else {
-            //   //print(globals.taskList.length);
-            //   //return Details(taskNum: index);
-            //   return Details(
-            //     taskIndex: widget.index,
-            //     detailedIndex: index,
-            //   );
-            // }
           },
         ),
       ),
