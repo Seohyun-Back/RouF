@@ -321,6 +321,7 @@ class _MainScreenState extends State<MainScreen> {
                 title: Text('로그아웃'),
                 onTap: () async {
                   await StopwatchPage(index: -1, taskKey: -1);
+                  //putFirebase();
                   globals.initGlobals();
                   FirebaseAuth.instance.signOut();
                   //globals.statusKey = 8;
@@ -367,7 +368,7 @@ class _MainScreenState extends State<MainScreen> {
                             fontSize: 16,
                           )),
                     ),
-                    SizedBox(
+                    Container(
                       height: 220,
                     ),
 
@@ -425,29 +426,38 @@ class _MainScreenState extends State<MainScreen> {
                     child: Column(
                       children: [
                         IconButton(
-                          icon: Image.asset(
-                              'assets/images/TaskIcon/${globals.tasks[i]}.png'),
-                          iconSize: 20,
-                          onPressed: () {
-                            Navigator.pop(dialogContext);
-                            //globals.statusKey = i;
-                            setState(() {
+                            icon: Image.asset(
+                                'assets/images/TaskIcon/${globals.tasks[i]}.png'),
+                            iconSize: 20,
+                            onPressed: () async {
+                              Navigator.pop(dialogContext);
+                              //globals.statusKey = i;
                               globals.taskList.contains(i)
                                   ? ScaffoldMessenger.of(context)
                                       .showSnackBar(SnackBar(
                                       content: Text("이미 추가된 카테고리입니다."),
                                     ))
-                                  : globals.taskList.add(i);
-                            });
+                                  : {
+                                      await FirebaseFirestore.instance
+                                          .collection(
+                                              'user/${globals.currentUid}/tasks')
+                                          .doc(i.toString())
+                                          .set({
+                                        'time': "00:00",
+                                        //'todos': Map(),
+                                      }),
+                                      setState(() {
+                                        globals.taskList.add(i);
+                                      }),
+                                    };
+                            }),
 
-                            //print(globals.statusKey);
-                            //setState(() {});
+                        //print(globals.statusKey);
+                        //setState(() {});
 
-                            //AddTask;
-                            //addDynamic();
-                            //new AddTask();
-                          },
-                        ),
+                        //AddTask;
+                        //addDynamic();
+                        //new AddTask();
                         Text(
                           globals.tasks[i],
                           style: TextStyle(fontSize: 12),
@@ -464,22 +474,31 @@ class _MainScreenState extends State<MainScreen> {
                       child: Column(
                         children: [
                           IconButton(
-                            icon: Image.asset(
-                                'assets/images/TaskIcon/${globals.tasks[i]}.png'),
-                            iconSize: 20,
-                            onPressed: () {
-                              Navigator.pop(dialogContext);
-                              //globals.statusKey = i;
-                              setState(() {
+                              icon: Image.asset(
+                                  'assets/images/TaskIcon/${globals.tasks[i]}.png'),
+                              iconSize: 20,
+                              onPressed: () async {
+                                Navigator.pop(dialogContext);
+                                //globals.statusKey = i;
                                 globals.taskList.contains(i)
                                     ? ScaffoldMessenger.of(context)
                                         .showSnackBar(SnackBar(
                                         content: Text("이미 추가된 카테고리입니다."),
                                       ))
-                                    : globals.taskList.add(i);
-                              });
-                            },
-                          ),
+                                    : {
+                                        await FirebaseFirestore.instance
+                                            .collection(
+                                                'user/${globals.currentUid}/tasks')
+                                            .doc(i.toString())
+                                            .set({
+                                          'title': globals.tasks[i],
+                                          'time': "00:00",
+                                        }),
+                                        setState(() {
+                                          globals.taskList.add(i);
+                                        }),
+                                      };
+                              }),
                           Text(
                             globals.tasks[i],
                             style: TextStyle(fontSize: 12),
@@ -495,6 +514,11 @@ class _MainScreenState extends State<MainScreen> {
       },
     );
   }
+
+  // void putFirebase() {
+  //   FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  // }
 }
 
 //class TaskList {}

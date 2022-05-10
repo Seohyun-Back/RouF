@@ -1,5 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'detailed_list.dart';
+import 'todo_list.dart';
 import 'stopwatch.dart';
 import 'package:RouF/globals.dart' as globals;
 
@@ -14,7 +15,6 @@ class Task extends StatefulWidget {
 class _TaskState extends State<Task> {
   @override
   Widget build(BuildContext context) {
-    //return Container(child: Text(globals.taskList[widget.taskNum].toString()));
     if (globals.taskList.length == 0) {
       return SizedBox(
         height: 10,
@@ -46,8 +46,6 @@ class _TaskState extends State<Task> {
                             height: 23,
                             width: 23,
                           ),
-                          // backgroundImage: AssetImage(
-                          //     'assets/images/TaskIcon/${globals.tasks[globals.taskList[widget.taskNum]]}.png'),
                         ),
                         SizedBox(width: 8),
                         Container(
@@ -62,16 +60,6 @@ class _TaskState extends State<Task> {
                                   // alignment: Alignment.topRight,
                                   onPressed: () {
                                     print("task add button is clicked");
-                                    // setState(() {
-                                    //   globals
-                                    //       .detailedList[globals.taskList[widget.taskNum]]
-                                    //       .add(globals.detailKey[
-                                    //           globals.taskList[widget.taskNum]]++);
-                                    // });
-                                    // print("ddddd : " +
-                                    //     globals.detailedList[
-                                    //             globals.taskList[widget.taskNum]]
-                                    //         .toString());
                                     showDialog(
                                       context: context,
                                       builder: (BuildContext context) {
@@ -85,6 +73,13 @@ class _TaskState extends State<Task> {
                                             actions: <Widget>[
                                               FlatButton(
                                                   onPressed: () {
+                                                    FirebaseFirestore.instance
+                                                        .collection(
+                                                            'user/${globals.currentUid}/tasks/${globals.taskList[widget.taskNum]}/todos')
+                                                        .doc(globals.input)
+                                                        .set({
+                                                      globals.input: false
+                                                    });
                                                     setState(() {
                                                       globals.Todo todo =
                                                           globals.Todo(
@@ -112,53 +107,16 @@ class _TaskState extends State<Task> {
                                     Icons.add_circle_outline,
                                     size: 15,
                                   )),
-                              // IconButton(
-                              //     icon: Icon(Icons.clear_sharp, size: 15),
-                              //     visualDensity: VisualDensity(
-                              //       horizontal: -4.0,
-                              //     ),
-                              //     onPressed: () {
-                              //       setState(() {
-                              //         print("삭제 전");
-                              //         for (int i = 0;
-                              //             i < globals.taskList.length;
-                              //             i++) {
-                              //           print(
-                              //               globals.taskList.length.toString() +
-                              //                   ":" +
-                              //                   globals.taskList[i].toString());
-                              //         }
-                              //         globals.taskList.removeAt(widget.taskNum);
-                              //         print("삭제 후");
-                              //         for (int i = 0;
-                              //             i < globals.taskList.length;
-                              //             i++) {
-                              //           print(widget.taskNum.toString() +
-                              //               ":" +
-                              //               globals.taskList[i].toString());
-                              //         }
-                              //       });
-                              //     })
                             ],
                           ),
                         ),
-                        // IconButton(
-                        //   onPressed: () {
-                        //     print("play button is clicked");
-
-                        //   },
-                        //   icon: Icon(Icons.play_arrow),
-                        //   iconSize: 17,
-                        // ),
-                        //SizedBox(width: 50), // timer
-
                         StopwatchPage(
                           index: widget.taskNum,
                           taskKey: globals.taskList[widget.taskNum],
                         ),
                       ],
                     ),
-                    DetailedList(index: widget.taskNum),
+                    TodoList(index: widget.taskNum),
                   ],
                 ),
               ),

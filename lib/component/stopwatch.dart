@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:RouF/globals.dart' as globals;
 
@@ -14,7 +14,7 @@ String formatTime(int milliseconds) {
 }
 
 class StopwatchPage extends StatefulWidget {
-  final int index; // 0 1 2 순서대로 그저 index
+  final int index; // 0 1 2 순서대로 index
   final int taskKey; // 얘는 해당 task의 key (공부 0 운동 1 ...)
   const StopwatchPage({Key? key, required this.index, required this.taskKey})
       : super(key: key);
@@ -45,9 +45,22 @@ class _StopwatchPageState extends State<StopwatchPage> {
     if (_stopwatch.isRunning) {
       _stopwatch.stop();
       globals.eachTaskTimer[index] = formatTime(_stopwatch.elapsedMilliseconds);
+      globals.statusKey = 8;
+      FirebaseFirestore.instance
+          .collection('user')
+          .doc(globals.currentUid)
+          .update({'statusKey': globals.statusKey});
+      FirebaseFirestore.instance
+          .collection('user/${globals.currentUid}/tasks')
+          .doc(taskKey.toString())
+          .update({'time': globals.eachTaskTimer[index]});
     } else {
       _stopwatch.start();
       globals.statusKey = taskKey;
+      FirebaseFirestore.instance
+          .collection('user')
+          .doc(globals.currentUid)
+          .update({'statusKey': globals.statusKey});
     }
 
     setState(() {});

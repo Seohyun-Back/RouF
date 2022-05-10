@@ -1,15 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:RouF/globals.dart' as globals;
 
-class DetailedList extends StatefulWidget {
+class TodoList extends StatefulWidget {
   final int index;
-  const DetailedList({Key? key, required this.index}) : super(key: key);
+  const TodoList({Key? key, required this.index}) : super(key: key);
 
   @override
-  State<DetailedList> createState() => _DetailedListState();
+  State<TodoList> createState() => _TodoListState();
 }
 
-class _DetailedListState extends State<DetailedList> {
+class _TodoListState extends State<TodoList> {
   @override
   Widget build(BuildContext context) {
     //bool done = false;
@@ -30,7 +31,13 @@ class _DetailedListState extends State<DetailedList> {
                   leading: Checkbox(
                     value: globals
                         .todos[globals.taskList[widget.index]][index].checked,
-                    onChanged: (newValue) {
+                    onChanged: (newValue) async {
+                      await FirebaseFirestore.instance
+                          .collection(
+                              'user/${globals.currentUid}/tasks/${globals.taskList[index]}/todos')
+                          .doc(globals.input)
+                          .set({globals.input: newValue});
+
                       setState(() {
                         globals.todos[globals.taskList[widget.index]][index]
                             .checked = newValue!;
@@ -45,6 +52,13 @@ class _DetailedListState extends State<DetailedList> {
                   trailing: IconButton(
                       icon: Icon(Icons.clear_sharp, size: 13),
                       onPressed: () {
+                        FirebaseFirestore.instance
+                            .collection(
+                                'user/${globals.currentUid}/tasks/${globals.taskList[widget.index]}/todos')
+                            .doc(globals
+                                .todos[globals.taskList[widget.index]][index]
+                                .todo)
+                            .delete();
                         setState(() {
                           globals.todos[globals.taskList[widget.index]]
                               .removeAt(index);
