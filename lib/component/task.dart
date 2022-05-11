@@ -76,11 +76,11 @@ class _TaskState extends State<Task> {
                                                     setState(() {
                                                       globals.Todo todo =
                                                           globals.Todo(
-                                                              // id: globals
-                                                              //     .eachTaskKey[globals
-                                                              //         .taskList[
-                                                              //     widget
-                                                              //         .taskNum]],
+                                                              id: globals
+                                                                  .eachTaskKey[globals
+                                                                      .taskList[
+                                                                  widget
+                                                                      .taskNum]],
                                                               todo:
                                                                   globals.input,
                                                               checked: false);
@@ -97,10 +97,37 @@ class _TaskState extends State<Task> {
                                                         .instance
                                                         .collection(
                                                             'user/${globals.currentUid}/tasks/${globals.taskList[widget.taskNum]}/todos')
-                                                        .doc(globals
-                                                            .todos[globals.taskList[widget.taskNum]][globals.eachTaskKey[globals.taskList[widget.taskNum]]].todo)
+                                                        .doc('${globals.todos[globals.taskList[widget.taskNum]][globals.eachTaskKey[globals.taskList[widget.taskNum]]].id}' +
+                                                            '${globals.todos[globals.taskList[widget.taskNum]][globals.eachTaskKey[globals.taskList[widget.taskNum]]].todo}')
                                                         .set({
-                                                      globals.input: globals
+                                                      // globals.input: globals
+                                                      //     .todos[globals
+                                                      //             .taskList[
+                                                      //         widget
+                                                      //             .taskNum]][globals
+                                                      //         .eachTaskKey[globals
+                                                      //             .taskList[
+                                                      //         widget.taskNum]]]
+                                                      //     .checked
+                                                      'id': globals
+                                                          .todos[globals
+                                                                  .taskList[
+                                                              widget
+                                                                  .taskNum]][globals
+                                                              .eachTaskKey[globals
+                                                                  .taskList[
+                                                              widget.taskNum]]]
+                                                          .id,
+                                                      'todo': globals
+                                                          .todos[globals
+                                                                  .taskList[
+                                                              widget
+                                                                  .taskNum]][globals
+                                                              .eachTaskKey[globals
+                                                                  .taskList[
+                                                              widget.taskNum]]]
+                                                          .todo,
+                                                      'checked': globals
                                                           .todos[globals
                                                                   .taskList[
                                                               widget
@@ -113,6 +140,7 @@ class _TaskState extends State<Task> {
                                                     globals.eachTaskKey[
                                                         globals.taskList[
                                                             widget.taskNum]]++;
+                                                    globals.input = '';
                                                     Navigator.of(context)
                                                         .pop(); // input 입력 후 창 닫히도록
                                                   },

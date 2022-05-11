@@ -7,12 +7,12 @@ import 'package:flutterfire_ui/auth.dart';
 import 'package:RouF/component/add_task.dart';
 
 class Todo {
-  //final int id; //todo마다의 고유한 ID
+  final int id; //todo마다의 고유한 ID
   final String todo; //내가 해야할것
   bool checked; //해당 todo를 완료 했는지 않았는지 확인하기 위한 용도
 
   Todo({
-    //required this.id,
+    required this.id,
     required this.todo,
     required this.checked,
   });
@@ -41,8 +41,26 @@ List<List<Todo>> todos = [
 ];
 String input = '';
 List<int> taskList = [];
-List<int> eachTaskKey = [0, 0, 0, 0, 0, 0, 0, 0];
-List<String> eachTaskTimer = ["", "", "", "", "", "", "", ""];
+List<int> eachTaskKey = [
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0
+]; // 각 todo의 갯수..? 인덱스로 쓰려고 만들었던듯
+List<String> eachTaskTimer = [
+  "00:00",
+  "00:00",
+  "00:00",
+  "00:00",
+  "00:00",
+  "00:00",
+  "00:00",
+  "00:00"
+];
 
 int statusKey = 8; // 기본 숨쉬기 상태
 
@@ -67,5 +85,14 @@ void initGlobals() {
   input = '';
   taskList = [];
   eachTaskKey = [0, 0, 0, 0, 0, 0, 0, 0];
-  eachTaskTimer = ["", "", "", "", "", "", "", ""];
+  eachTaskTimer = [
+    "00:00",
+    "00:00",
+    "00:00",
+    "00:00",
+    "00:00",
+    "00:00",
+    "00:00",
+    "00:00"
+  ];
 }

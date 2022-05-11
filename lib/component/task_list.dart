@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:RouF/globals.dart' as globals;
 import '../component/task.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class TaskList extends StatefulWidget {
   const TaskList({Key? key}) : super(key: key);
@@ -10,50 +12,87 @@ class TaskList extends StatefulWidget {
 }
 
 class _TaskListState extends State<TaskList> {
+  late Future myFuture;
+
+  Future _future() async {
+    //globals.taskList = [];
+    final _authentication = FirebaseAuth.instance;
+    final user = await _authentication.currentUser!;
+    //for (int i = 0; i < 8; i++) {
+    var taskDocument = await FirebaseFirestore.instance
+        .collection('user/${user.uid}/tasks')
+        .get()
+        .then((value) => {
+              value.docs.forEach((document) {
+                print("document DATA : ");
+                print(document.data());
+                globals.taskList.add(document.data()['taskKey']);
+                //print(document.data()['time']);
+                globals.eachTaskTimer[document.data()['taskKey']] =
+                    document.data()['time'];
+              })
+            });
+    for (int i = 0; i < globals.taskList.length; i++) {
+      print(globals.taskList[i]);
+      print(globals.eachTaskTimer[globals.taskList[i]]);
+    }
+    return taskDocument;
+  }
+
+  @override
+  void initState() {
+    // assign this variable your Future
+    myFuture = _future();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 370,
-      padding: EdgeInsets.symmetric(vertical: 10),
-      color: Colors.white,
-      child: Expanded(
-        child: ListView.builder(
-          shrinkWrap: true,
-          itemCount: globals.taskList.length,
-          itemBuilder: (context, index) {
-            if (globals.taskList.length == 0) {
-              return SizedBox(
-                height: 10,
-              );
-            } else {
-              print(globals.taskList.length);
-              return Task(taskNum: index);
-              // return Column(
-              //   children: [
-              //     Align(
-              //       alignment: Alignment.centerLeft,
-              //       child: Text(globals.taskList[index].toString()),
-              //     ),
-              //     Align(
-              //       alignment: Alignment.center,
-              //       child: Padding(
-              //           padding: const EdgeInsets.only(right: 8.0),
-              //           child: Text(
-              //               globals.tasks[globals.taskList[index]].toString())),
-              //     ),
-              //   ],
-              // );
-            }
-            // } else {
-            //   //print(globals.taskList.length);
-            //   return SizedBox(height: 10);
-
-            //   //return Text("이건뭐야 ; ");
-            //   //return EventItem(event: timedEvents[index - 1]);
-            // }
-          },
-        ),
-      ),
-    );
+    return FutureBuilder(
+        future: myFuture,
+        builder: (context, snapshot) {
+          return Container(
+            height: 370,
+            padding: EdgeInsets.symmetric(vertical: 10),
+            color: Colors.white,
+            child: Expanded(
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: globals.taskList.length,
+                itemBuilder: (context, index) {
+                  print("globals.taskList.length : " +
+                      globals.taskList.length.toString());
+                  if (globals.taskList.length == 0) {
+                    return SizedBox(
+                      height: 10,
+                    );
+                  } else {
+                    return Task(taskNum: index);
+                  }
+                },
+              ),
+            ),
+          );
+        });
   }
 }
+
+// Future _future() async {
+//   globals.taskList = [];
+//   final _authentication = FirebaseAuth.instance;
+//   final user = await _authentication.currentUser!;
+//   //for (int i = 0; i < 8; i++) {
+//   var taskDocument = await FirebaseFirestore.instance
+//       .collection('user/${user.uid}/tasks')
+//       .get()
+//       .then((value) => {
+//             value.docs.forEach((document) {
+//               print(document.data());
+//               globals.taskList.add(document.data()['taskKey']);
+//             })
+//           });
+//   for (int i = 0; i < globals.taskList.length; i++) {
+//     print(globals.taskList[i]);
+//   }
+//   return taskDocument;
+// }

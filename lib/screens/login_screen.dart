@@ -43,6 +43,20 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
     globals.currentEmail = _userData.data()!['email'];
     print(
         'currentUsername: ${globals.currentUsername} \n currentUserUid: ${globals.currentUid} \n currentUserEmail: ${globals.currentEmail}');
+
+    //for (int i = 0; i < 8; i++) {
+    // var taskDocument = await FirebaseFirestore.instance
+    //     .collection('user/${user.uid}/tasks')
+    //     .get()
+    //     .then((value) => {
+    //           value.docs.forEach((document) {
+    //             print(document.data());
+    //             globals.taskList.add(document.data()['taskKey']);
+    //           })
+    //         });
+    // for (int i = 0; i < globals.taskList.length; i++) {
+    //   print(globals.taskList[i]);
+    // }
   }
 
   @override

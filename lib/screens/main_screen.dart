@@ -443,6 +443,7 @@ class _MainScreenState extends State<MainScreen> {
                                               'user/${globals.currentUid}/tasks')
                                           .doc(i.toString())
                                           .set({
+                                        'taskKey': i,
                                         'title': globals.tasks[i],
                                         'time': "00:00",
                                         //'todos': Map(),
@@ -492,6 +493,7 @@ class _MainScreenState extends State<MainScreen> {
                                                 'user/${globals.currentUid}/tasks')
                                             .doc(i.toString())
                                             .set({
+                                          'taskKey': i,
                                           'title': globals.tasks[i],
                                           'time': "00:00",
                                         }),
