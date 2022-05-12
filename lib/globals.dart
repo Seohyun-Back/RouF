@@ -27,7 +27,7 @@ String friendUid = '';
 String friendEmail = '';
 int friendNum = 0;
 
-List<String> tasks = ["공부", "운동", "잠자기", "일하기", "놀기", "이동", "밥먹기", "기타"];
+List<String> tasks = ["공부", "운동", "잠자기", "일하기", "놀기", "이동", "밥먹기", "기타", "숨쉬기"];
 //List<AddTask> addTaskList = [];
 List<List<Todo>> todos = [
   [],
@@ -63,6 +63,18 @@ List<String> eachTaskTimer = [
 ];
 
 int statusKey = 8; // 기본 숨쉬기 상태
+int actionKey = 8;
+List<String> action = [
+  "공부하는 중..",
+  "운동하는 중..",
+  "잠자는 중..",
+  "일하는 중..",
+  "노는 중..",
+  "이동하는 중..",
+  "밥 먹는 중..",
+  "다른 거 하는 중..",
+  "숨 쉬는 중.."
+];
 
 void initGlobals() {
   currentUsername = '';

@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: primaryGreen,
-        fontFamily: 'rouf-font',
+        fontFamily: 'nanum-gothic',
       ),
       //home: MyPage(),
       home: StreamBuilder(
