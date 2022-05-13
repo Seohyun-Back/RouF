@@ -75,10 +75,9 @@ flutter:
   #   - images/a_dot_ham.jpeg
   assets:
     - assets/images/logo-black.png
-    - assets/images/profile1.jpg
-    - assets/images/profile2.jpg
     - assets/images/logo-black-2.png
     - assets/images/login_logo.jpg
+    - assets/images/profile.jpg
     - assets/images/TaskIcon/공부.png
     - assets/images/TaskIcon/운동.png
     - assets/images/TaskIcon/놀기.png
@@ -119,11 +118,25 @@ flutter:
     - family: nanum-gothic
       fonts:
         - asset: fonts/nanum-gothic/NanumGothic.ttf
-        - asset: fonts/nanum-gothic/NanumGothicBold.ttf
-          weight: 200
-        - asset: fonts/nanum-gothic/NanumGothicExtraBold.ttf
-          weight: 300
         - asset: fonts/nanum-gothic/NanumGothicLight.ttf
-          weight: 400
+          weight: 300
+        - asset: fonts/nanum-gothic/NanumGothicBold.ttf
+          weight: 700
+        - asset: fonts/nanum-gothic/NanumGothicExtraBold.ttf
+          weight: 800
+        
+    - family: Mono
+      fonts:
+        - asset: fonts/Mono/IBMPlexMono-Regular.ttf
+        - asset: fonts/Mono/IBMPlexMono-ExtraLight.ttf
+          weight: 200
+        - asset: fonts/Mono/IBMPlexMono-Light.ttf
+          weight: 300
+        - asset: fonts/Mono/IBMPlexMono-Medium.ttf
+          weight: 500
+        - asset: fonts/Mono/IBMPlexMono-SemiBold.ttf
+          weight: 600
+        - asset: fonts/Mono/IBMPlexMono-Bold.ttf
+          weight: 700
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

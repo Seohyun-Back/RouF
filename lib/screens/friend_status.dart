@@ -12,6 +12,7 @@ class FriendStatus extends StatefulWidget {
 class _FriendStatusState extends State<FriendStatus> {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   int actionKey = 8;
+  bool isBreathing = false;
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +30,12 @@ class _FriendStatusState extends State<FriendStatus> {
               builder: (BuildContext context,
                   AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
+                  return Text('친구를 추가하고 실시간으로 친구들과 일상을 공유해보세요!',
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.w200));
+                  // return Center(
+                  //   child: CircularProgressIndicator(),
+                  // );
                 }
                 final docs = snapshot.data!.docs;
 
@@ -53,11 +57,27 @@ class _FriendStatusState extends State<FriendStatus> {
                                   snapshot2) {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
-                              return Center(
-                                child: CircularProgressIndicator(),
+                              return Text('친구를 추가하고 실시간으로 친구들과 일상을 공유해보세요!',
+                                  style: TextStyle(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w200));
+                              // Center(
+                              //   child: CircularProgressIndicator(),
+                              // );
+                            }
+                            try {
+                              actionKey = snapshot2.data!['statusKey'];
+                              if (actionKey == 8)
+                                isBreathing = true;
+                              else
+                                isBreathing = false;
+                            } catch (e) {
+                              return SizedBox(
+                                height: 0,
+                                width: 0,
                               );
                             }
-                            actionKey = snapshot2.data!['statusKey'];
+                            // actionKey = snapshot2.data!['statusKey'];
 
                             return Container(
                                 //padding:,
@@ -67,12 +87,13 @@ class _FriendStatusState extends State<FriendStatus> {
                               // 친구 프로필사진
                               leading: CircleAvatar(
                                 radius: 18,
-                                backgroundColor:
-                                    Color.fromARGB(255, 201, 227, 192),
+                                backgroundColor: isBreathing
+                                    ? Colors.transparent
+                                    : Color.fromARGB(255, 201, 227, 192),
                                 child: Image.asset(
                                   'assets/images/TaskIcon/${globals.tasks[actionKey]}.png',
-                                  height: 20,
-                                  width: 20,
+                                  height: isBreathing ? 21 : 20,
+                                  width: isBreathing ? 21 : 20,
                                 ),
                               ),
                               // 친구 이름
@@ -80,7 +101,7 @@ class _FriendStatusState extends State<FriendStatus> {
                                   docs[index]['name'] +
                                       '는 ' +
                                       globals.action[actionKey],
-                                  style: TextStyle(fontSize: 18)),
+                                  style: TextStyle(fontSize: 16)),
                             ));
                           });
                     },

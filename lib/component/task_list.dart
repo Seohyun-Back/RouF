@@ -63,9 +63,12 @@ class _TaskListState extends State<TaskList> {
                   print("globals.taskList.length : " +
                       globals.taskList.length.toString());
                   if (globals.taskList.length == 0) {
-                    return SizedBox(
-                      height: 10,
-                    );
+                    return Container(
+                        child: Text('아래 버튼을 통해 할 일을 추가하고, 루프를 즐겨보세요!',
+                            style: TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w200,
+                                color: Colors.black)));
                   } else {
                     return Task(taskNum: index);
                   }
