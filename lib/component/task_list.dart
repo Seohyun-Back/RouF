@@ -64,13 +64,73 @@ class _TaskListState extends State<TaskList> {
                       globals.taskList.length.toString());
                   if (globals.taskList.length == 0) {
                     return Container(
-                        child: Text('아래 버튼을 통해 할 일을 추가하고, 루프를 즐겨보세요!',
-                            style: TextStyle(
-                                fontSize: 10,
-                                fontWeight: FontWeight.w200,
-                                color: Colors.black)));
+                      child: Text('아래 버튼을 통해 할 일을 추가하고, 루프를 즐겨보세요!',
+                          style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.w200,
+                              color: Colors.black)),
+                    );
                   } else {
-                    return Task(taskNum: index);
+                    return Dismissible(
+                      key: Key(globals.taskList[index].toString()),
+                      child: Task(taskNum: index),
+                      background: Container(color: Colors.lightGreen[200]),
+                      confirmDismiss: (direction) {
+                        //if(direction == DismissDirection.endToStart){
+                        return showDialog(
+                            context: context,
+                            builder: (ctx) {
+                              return AlertDialog(
+                                  //title: const Text(""),
+                                  content: Text("카테고리를 삭제하시겠습니까?"),
+                                  actions: <Widget>[
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        return Navigator.of(context).pop(false);
+                                      },
+                                      child: const Text('CANCEL'),
+                                    ),
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        return Navigator.of(context).pop(true);
+                                      },
+                                      child: const Text('DELETE'),
+                                    ),
+                                  ]);
+                            });
+
+                        // }
+                        //return Future.value(false);
+                      },
+                      onDismissed: (direction) {
+                        setState(() {
+                          globals.todos[globals.taskList[index]].clear();
+                          globals.eachTaskKey[globals.taskList[index]] = 0;
+                          globals.eachTaskTimer[globals.taskList[index]] =
+                              "00:00";
+                          if (globals.statusKey == globals.taskList[index]) {
+                            globals.statusKey = 8;
+                          }
+
+                          FirebaseFirestore.instance
+                              .collection(
+                                  'user/${globals.currentUid}/tasks/${globals.taskList[index]}/todos')
+                              .get()
+                              .then((snapshot) {
+                            for (DocumentSnapshot ds in snapshot.docs) {
+                              ds.reference.delete();
+                            }
+                          });
+
+                          FirebaseFirestore.instance
+                              .collection("user/${globals.currentUid}/tasks")
+                              .doc(globals.taskList[index].toString())
+                              .delete();
+
+                          globals.taskList.removeAt(index);
+                        });
+                      },
+                    );
                   }
                 },
               ),

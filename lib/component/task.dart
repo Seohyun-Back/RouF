@@ -32,13 +32,41 @@ class _TaskState extends State<Task> {
                 padding: EdgeInsets.fromLTRB(15, 10, 0, 17),
                 width: 330,
                 //height: 150,
+
                 decoration: BoxDecoration(
-                    color: Color(0xfff4f4f4),
-                    borderRadius: new BorderRadius.only(
-                        topLeft: const Radius.circular(20.0),
-                        topRight: const Radius.circular(20.0),
-                        bottomLeft: const Radius.circular(20.0),
-                        bottomRight: const Radius.circular(20.0))),
+                  color: Color(0xfff4f4f4),
+                  borderRadius: new BorderRadius.only(
+                      topLeft: const Radius.circular(20.0),
+                      topRight: const Radius.circular(20.0),
+                      bottomLeft: const Radius.circular(20.0),
+                      bottomRight: const Radius.circular(20.0)),
+                ),
+                // decoration:
+                //     globals.taskList[widget.taskNum] == globals.statusKey
+                //         ? BoxDecoration(
+                //             color: Color(0xfff4f4f4),
+                //             borderRadius: new BorderRadius.only(
+                //                 topLeft: const Radius.circular(20.0),
+                //                 topRight: const Radius.circular(20.0),
+                //                 bottomLeft: const Radius.circular(20.0),
+                //                 bottomRight: const Radius.circular(20.0)),
+                //             boxShadow: [
+                //                 BoxShadow(
+                //                   color: Colors.lightGreen,
+                //                   offset: Offset(4.0, 4.0),
+                //                   blurRadius: 15.0,
+                //                   spreadRadius: 1.0,
+                //                 )
+                //               ])
+                //         : BoxDecoration(
+                //             color: Color(0xfff4f4f4),
+                //             borderRadius: new BorderRadius.only(
+                //                 topLeft: const Radius.circular(20.0),
+                //                 topRight: const Radius.circular(20.0),
+                //                 bottomLeft: const Radius.circular(20.0),
+                //                 bottomRight: const Radius.circular(20.0)),
+                //           ),
+
                 child: Column(
                   children: [
                     Row(
