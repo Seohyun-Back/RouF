@@ -1,3 +1,5 @@
+//import 'dart:html';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:RouF/globals.dart' as globals;
@@ -13,7 +15,7 @@ class TaskList extends StatefulWidget {
 
 class _TaskListState extends State<TaskList> {
   late Future myFuture;
-
+  late int selectedIndex = -1;
   Future _future() async {
     //globals.taskList = [];
     final _authentication = FirebaseAuth.instance;
@@ -32,10 +34,10 @@ class _TaskListState extends State<TaskList> {
                     document.data()['time'];
               })
             });
-    for (int i = 0; i < globals.taskList.length; i++) {
-      print(globals.taskList[i]);
-      print(globals.eachTaskTimer[globals.taskList[i]]);
-    }
+    // for (int i = 0; i < globals.taskList.length; i++) {
+    //   print(globals.taskList[i]);
+    //   print(globals.eachTaskTimer[globals.taskList[i]]);
+    // }
     return taskDocument;
   }
 
@@ -60,8 +62,8 @@ class _TaskListState extends State<TaskList> {
                 shrinkWrap: true,
                 itemCount: globals.taskList.length,
                 itemBuilder: (context, index) {
-                  print("globals.taskList.length : " +
-                      globals.taskList.length.toString());
+                  //print("globals.taskList.length : " +
+                  //    globals.taskList.length.toString());
                   if (globals.taskList.length == 0) {
                     return Container(
                       child: Text('아래 버튼을 통해 할 일을 추가하고, 루프를 즐겨보세요!',
@@ -73,7 +75,37 @@ class _TaskListState extends State<TaskList> {
                   } else {
                     return Dismissible(
                       key: Key(globals.taskList[index].toString()),
-                      child: Task(taskNum: index),
+                      child: ListTile(
+                        onTap: () {
+                          if (selectedIndex != index &&
+                              globals.statusKey != 8) {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text("먼저 실행중인 카테고리를 종료해주세요."),
+                            ));
+                          } else {
+                            globals.eachtimerStartKey[globals.taskList[index]] =
+                                true;
+                            // globals.eachtimerStartKey[globals.taskList[index]]
+                            //     ? globals.eachtimerStartKey[
+                            //         globals.taskList[index]] = false
+                            //     : globals.eachtimerStartKey[
+                            //         globals.taskList[index]] = true;
+                            setState(() {
+                              selectedIndex == index
+                                  ? selectedIndex = -1
+                                  : selectedIndex = index;
+                              //handleStartStop(index, globals.taskList[index]);
+                            });
+                          }
+                        },
+                        title: Task(
+                          taskNum: index,
+                          selected: selectedIndex == index,
+                        ),
+                        // tileColor: selectedIndex == index
+                        //     ? Color(0xfff4f4f4)
+                        //     : Color(0x000000),
+                      ),
                       background: Container(color: Colors.white),
                       confirmDismiss: (direction) {
                         //if(direction == DismissDirection.endToStart){
@@ -107,7 +139,7 @@ class _TaskListState extends State<TaskList> {
                           globals.todos[globals.taskList[index]].clear();
                           globals.eachTaskKey[globals.taskList[index]] = 0;
                           globals.eachTaskTimer[globals.taskList[index]] =
-                              "00:00";
+                              "00H 00m";
                           if (globals.statusKey == globals.taskList[index]) {
                             globals.statusKey = 8;
                           }
@@ -139,23 +171,3 @@ class _TaskListState extends State<TaskList> {
         });
   }
 }
-
-// Future _future() async {
-//   globals.taskList = [];
-//   final _authentication = FirebaseAuth.instance;
-//   final user = await _authentication.currentUser!;
-//   //for (int i = 0; i < 8; i++) {
-//   var taskDocument = await FirebaseFirestore.instance
-//       .collection('user/${user.uid}/tasks')
-//       .get()
-//       .then((value) => {
-//             value.docs.forEach((document) {
-//               print(document.data());
-//               globals.taskList.add(document.data()['taskKey']);
-//             })
-//           });
-//   for (int i = 0; i < globals.taskList.length; i++) {
-//     print(globals.taskList[i]);
-//   }
-//   return taskDocument;
-// }

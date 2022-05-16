@@ -3,22 +3,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:RouF/globals.dart' as globals;
 
-// import 'package:timezone/timezone.dart' as tz;
-
-// makeDate(hour, min, sec) {
-//   var now = tz.TZDateTime.now(tz.local);
-//   var when =
-//       tz.TZDateTime(tz.local, now.year, now.month, now.day, hour, min, sec);
-//   if (when.isBefore(now)) {
-//     return when.add(Duration(days: 1));
-//   } else {
-//     return when;
-//   }
-// }
-
 int getMilliseconds(String time) {
   int hours = int.parse(time.substring(0, 2));
-  int minutes = int.parse(time.substring(3));
+  int minutes = int.parse(time.substring(4, 6));
   int milliseconds = hours * 60 * 60 * 1000 + minutes * 60 * 1000;
   return milliseconds;
 }
@@ -29,14 +16,19 @@ String formatTime(int milliseconds) {
   var minutes = ((secs % 3600) ~/ 60).toString().padLeft(2, '0');
   var seconds = (secs % 60).toString().padLeft(2, '0');
 
-  return "$hours:$minutes";
+  return "${hours}H ${minutes}m";
   //return "$hours:$minutes:$seconds";
 }
 
 class StopwatchPage extends StatefulWidget {
   final int index; // 0 1 2 순서대로 index
   final int taskKey; // 얘는 해당 task의 key (공부 0 운동 1 ...)
-  const StopwatchPage({Key? key, required this.index, required this.taskKey})
+  final bool play;
+  const StopwatchPage(
+      {Key? key,
+      required this.index,
+      required this.taskKey,
+      required this.play})
       : super(key: key);
   @override
   _StopwatchPageState createState() => _StopwatchPageState();
@@ -64,13 +56,13 @@ class _StopwatchPageState extends State<StopwatchPage> {
   void handleStartStop(int index, int taskKey) {
     if (_stopwatch.isRunning) {
       _stopwatch.stop();
+      globals.eachtimerStartKey[taskKey] = false;
       setState(() {
         globals.eachTaskTimer[taskKey] = formatTime(
             getMilliseconds(globals.eachTaskTimer[taskKey]) +
                 _stopwatch.elapsedMilliseconds);
       });
 
-      //print("&&&&&&&&&&" + globals.eachTaskTimer[taskKey]);
       _stopwatch = Stopwatch();
       globals.statusKey = 8;
       FirebaseFirestore.instance
@@ -83,6 +75,7 @@ class _StopwatchPageState extends State<StopwatchPage> {
           .update({'time': globals.eachTaskTimer[taskKey]});
     } else {
       _stopwatch.start();
+      globals.eachtimerStartKey[taskKey] = false;
       globals.statusKey = taskKey;
       FirebaseFirestore.instance
           .collection('user')
@@ -95,11 +88,13 @@ class _StopwatchPageState extends State<StopwatchPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (globals.eachtimerStartKey[widget.taskKey])
+      handleStartStop(widget.index, widget.taskKey);
     if (widget.index == -1 && widget.taskKey == -1) {
       for (int i = 0; i < 8; i++) {
         //StopwatchPage(index: i, taskKey: globals.taskList[i]);
         handleStartStop(i, globals.taskList[i]);
-        print(globals.eachTaskTimer[i]);
+        //print(globals.eachTaskTimer[i]);
       }
       return Container(height: 0, width: 0);
     } else {
@@ -110,25 +105,20 @@ class _StopwatchPageState extends State<StopwatchPage> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
-              IconButton(
-                onPressed: () {
-                  handleStartStop(widget.index, widget.taskKey);
-                },
-                icon:
-                    Icon(_stopwatch.isRunning ? Icons.pause : Icons.play_arrow),
-                iconSize: 15,
-              ),
+              // IconButton(
+              //   onPressed: () {
+              //     handleStartStop(widget.index, widget.taskKey);
+              //   },
+              //   icon:
+              //       Icon(_stopwatch.isRunning ? Icons.pause : Icons.play_arrow),
+              //   iconSize: 15,
+              // ),
+
               Text(
                   formatTime(
                       getMilliseconds(globals.eachTaskTimer[widget.taskKey]) +
                           _stopwatch.elapsedMilliseconds),
-                  // formatTime(
-                  //     getMilliseconds(globals.eachTaskTimer[widget.taskKey]) +
-                  //         _stopwatch.elapsedMilliseconds),
                   style: TextStyle(fontSize: 15.0)),
-              // ElevatedButton(
-              //     onPressed: handleStartStop,
-              //     child: Text(_stopwatch.isRunning ? 'Stop' : 'Start')),
             ],
           ),
         ),

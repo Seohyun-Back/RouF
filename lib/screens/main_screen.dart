@@ -1,4 +1,4 @@
-import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
+//import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -8,7 +8,6 @@ import 'package:RouF/screens/friend_status.dart';
 import 'package:RouF/screens/sidebar/friend_list.dart';
 import 'package:RouF/screens/sidebar/friend_request.dart';
 import 'package:RouF/screens/monthly.dart';
-
 import '../../globals.dart' as globals;
 
 class MainScreen extends StatefulWidget {
@@ -163,7 +162,7 @@ class _MainScreenState extends State<MainScreen> {
                                           .set({
                                         'taskKey': i,
                                         'title': globals.tasks[i],
-                                        'time': "00:00",
+                                        'time': "00H 00m",
                                         //'todos': Map(),
                                       }),
                                       setState(() {
@@ -213,7 +212,7 @@ class _MainScreenState extends State<MainScreen> {
                                             .set({
                                           'taskKey': i,
                                           'title': globals.tasks[i],
-                                          'time': "00:00",
+                                          'time': "00H 00m",
                                         }),
                                         setState(() {
                                           globals.taskList.add(i);
@@ -408,7 +407,7 @@ class _MainScreenState extends State<MainScreen> {
                     fontWeight: FontWeight.w500,
                   )),
               onTap: () {
-                print("친구 is clicked");
+                //print("친구 is clicked");
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) {
@@ -428,7 +427,7 @@ class _MainScreenState extends State<MainScreen> {
                     fontWeight: FontWeight.w500,
                   )),
               onTap: () {
-                print("Setting is clicked");
+                //print("Setting is clicked");
               },
             ),
             ListTile(
@@ -444,7 +443,7 @@ class _MainScreenState extends State<MainScreen> {
               onTap: () {
                 globals.initGlobals();
                 FirebaseAuth.instance.signOut();
-                print("Logout is clicked");
+                //print("Logout is clicked");
               },
             ),
           ],
@@ -504,64 +503,3 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 }
-
-// Future<String> getUID() async {
-//   final _authentication = FirebaseAuth.instance;
-
-//   Firebase.initializeApp();
-//   User user = await _authentication.currentUser!;
-//   final _userData =
-//       await FirebaseFirestore.instance.collection('user').doc(user.uid).get();
-//   //globals.currentUsername = _userData.data()!['userName'];
-//   globals.currentUid = _userData.data()!['userUID'];
-//   //globals.currentEmail = _userData.data()!['email'];
-//   return _userData.data()!['userUID'];
-// }
-
-// void alarm12() async {
-//   DateTime today = DateTime.now();
-//   print(today.hour.toString() +
-//       " : " +
-//       today.minute.toString() +
-//       " : " +
-//       today.second.toString() +
-//       "호출됐어요!");
-//   print("currentUid : " + globals.currentUid);
-//   // var firestore = await FirebaseFirestore.instance
-//   //     .collection('user/${getUID()}/days')
-//   //     .doc(today.month.toString() + today.day.toString());
-
-//   for (int i = 0; i < globals.taskList.length; i++) {
-//     await FirebaseFirestore.instance
-//         .collection('user/${getUID()}/days')
-//         .doc(today.month.toString() + today.day.toString())
-//         .set({
-//       globals.tasks[globals.taskList[i]]:
-//           globals.eachTaskTimer[globals.taskList[i]]
-//     });
-//   }
-//   print("? " + globals.taskList.length.toString());
-//   globals.todos = [
-//     [],
-//     [],
-//     [],
-//     [],
-//     [],
-//     [],
-//     [],
-//     [],
-//   ];
-//   globals.taskList = [];
-//   globals.eachTaskKey = [0, 0, 0, 0, 0, 0, 0, 0];
-//   globals.eachTaskTimer = [
-//     "00:00",
-//     "00:00",
-//     "00:00",
-//     "00:00",
-//     "00:00",
-//     "00:00",
-//     "00:00",
-//     "00:00"
-//   ];
-//   print("이건가" + globals.taskList.toString());
-// }

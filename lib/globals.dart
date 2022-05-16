@@ -51,16 +51,25 @@ List<int> eachTaskKey = [
   0
 ]; // 각 todo의 갯수..? 인덱스로 쓰려고 만들었던듯
 List<String> eachTaskTimer = [
-  "00:00",
-  "00:00",
-  "00:00",
-  "00:00",
-  "00:00",
-  "00:00",
-  "00:00",
-  "00:00"
+  "00H 00m",
+  "00H 00m",
+  "00H 00m",
+  "00H 00m",
+  "00H 00m",
+  "00H 00m",
+  "00H 00m",
+  "00H 00m"
 ];
-
+List<bool> eachtimerStartKey = [
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false
+];
 int statusKey = 8; // 기본 숨쉬기 상태
 int actionKey = 8;
 List<String> action = [
@@ -97,13 +106,13 @@ void initGlobals() {
   taskList = [];
   eachTaskKey = [0, 0, 0, 0, 0, 0, 0, 0];
   eachTaskTimer = [
-    "00:00",
-    "00:00",
-    "00:00",
-    "00:00",
-    "00:00",
-    "00:00",
-    "00:00",
-    "00:00"
+    "00H 00m",
+    "00H 00m",
+    "00H 00m",
+    "00H 00m",
+    "00H 00m",
+    "00H 00m",
+    "00H 00m",
+    "00H 00m"
   ];
 }
