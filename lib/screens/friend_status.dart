@@ -30,9 +30,11 @@ class _FriendStatusState extends State<FriendStatus> {
               builder: (BuildContext context,
                   AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Text('친구를 추가하고 실시간으로 친구들과 일상을 공유해보세요!',
-                      style:
-                          TextStyle(fontSize: 15, fontWeight: FontWeight.w200));
+                  return Center(
+                    child: Text('친구를 추가하고 실시간으로 친구들과 일상을 공유해보세요!',
+                        style: TextStyle(
+                            fontSize: 11, fontWeight: FontWeight.w200)),
+                  );
                   // return Center(
                   //   child: CircularProgressIndicator(),
                   // );
@@ -89,7 +91,7 @@ class _FriendStatusState extends State<FriendStatus> {
                                 radius: 18,
                                 backgroundColor: isBreathing
                                     ? Colors.transparent
-                                    : Color.fromARGB(255, 201, 227, 192),
+                                    : Color(0xffddeacf),
                                 child: Image.asset(
                                   'assets/images/TaskIcon/${globals.tasks[actionKey]}.png',
                                   height: isBreathing ? 21 : 20,

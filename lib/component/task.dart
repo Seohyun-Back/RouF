@@ -79,21 +79,22 @@ class _TaskState extends State<Task> {
                     Row(
                       children: [
                         CircleAvatar(
-                          backgroundColor: Color(0xff95DF7D),
+                          backgroundColor: Color(0xffb5d096),
                           child: Image.asset(
                             'assets/images/TaskIcon/${globals.tasks[globals.taskList[widget.taskNum]]}.png',
                             height: 23,
                             width: 23,
                           ),
                         ),
-                        SizedBox(width: 8),
+                        SizedBox(width: 18),
                         Container(
                           width: 130,
                           child: Row(
                             children: [
                               Text(
                                 globals.tasks[globals.taskList[widget.taskNum]],
-                                style: TextStyle(fontSize: 15),
+                                style: TextStyle(
+                                    fontSize: 15, fontWeight: FontWeight.w500),
                               ),
                               IconButton(
                                   // alignment: Alignment.topRight,

@@ -8,6 +8,7 @@ import 'package:RouF/screens/friend_status.dart';
 import 'package:RouF/screens/sidebar/friend_list.dart';
 import 'package:RouF/screens/sidebar/friend_request.dart';
 import 'package:RouF/screens/monthly.dart';
+import 'package:RouF/screens/sidebar/rouf_settings.dart';
 import '../../globals.dart' as globals;
 
 class MainScreen extends StatefulWidget {
@@ -97,21 +98,24 @@ class _MainScreenState extends State<MainScreen> {
       },
       child: Row(
         children: [
-          Icon(
-            Icons.arrow_back_ios_rounded,
-            color: Colors.black,
-            size: 16,
-          ),
           Text(
             selectedDate.year.toString() +
                 "/" +
                 selectedDate.month.toString() +
                 "/" +
                 selectedDate.day.toString() +
-                " (" +
+                "(" +
                 listOfDays[selectedDate.weekday - 1] +
                 ")",
-            style: TextStyle(fontSize: 16),
+            style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
+          ),
+          SizedBox(
+            width: 12,
+          ),
+          Icon(
+            Icons.arrow_forward_ios_rounded,
+            color: Colors.black,
+            size: 16,
           ),
         ],
       ),
@@ -257,13 +261,6 @@ class _MainScreenState extends State<MainScreen> {
         preferredSize: Size.fromHeight(50.0), // AppBar 사이즈 지정
         child: AppBar(
           backgroundColor: Colors.white, // AppBar 색상 지정
-          leading: Transform.translate(
-            offset: Offset(7, 0),
-            child: Image.asset(
-              'assets/images/logo-black-2.png',
-              height: 50,
-            ),
-          ),
 
           iconTheme: IconThemeData(color: Color.fromARGB(255, 32, 32, 32)),
           elevation: 0.0,
@@ -428,6 +425,12 @@ class _MainScreenState extends State<MainScreen> {
                   )),
               onTap: () {
                 //print("Setting is clicked");
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) {
+                    return RoufSettings();
+                  }),
+                );
               },
             ),
             ListTile(
@@ -461,7 +464,9 @@ class _MainScreenState extends State<MainScreen> {
           // child: SingleChildScrollView(
           //   scrollDirection: Axis.vertical,
           child: Column(children: [
-            tapableDate(),
+            Container(
+                padding: EdgeInsets.fromLTRB(25, 0, 0, 0),
+                child: tapableDate()),
             const SizedBox(
               height: 10,
             ),
