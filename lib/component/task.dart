@@ -98,12 +98,12 @@ class _TaskState extends State<Task> {
                               IconButton(
                                   // alignment: Alignment.topRight,
                                   onPressed: () {
-                                    print("task add button is clicked");
+                                    //print("task add button is clicked");
                                     showDialog(
                                       context: context,
                                       builder: (BuildContext context) {
                                         return AlertDialog(
-                                            title: Text("Add Todo"),
+                                            title: Text("투두리스트 추가"),
                                             content: TextField(
                                               onChanged: (String value) {
                                                 globals.input = value;
@@ -191,7 +191,7 @@ class _TaskState extends State<Task> {
                                   visualDensity:
                                       VisualDensity(horizontal: -4.0),
                                   icon: Icon(
-                                    Icons.add_circle_outline,
+                                    Icons.add_task_rounded,
                                     size: 15,
                                   )),
                             ],
