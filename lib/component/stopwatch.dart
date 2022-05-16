@@ -3,6 +3,19 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:RouF/globals.dart' as globals;
 
+// import 'package:timezone/timezone.dart' as tz;
+
+// makeDate(hour, min, sec) {
+//   var now = tz.TZDateTime.now(tz.local);
+//   var when =
+//       tz.TZDateTime(tz.local, now.year, now.month, now.day, hour, min, sec);
+//   if (when.isBefore(now)) {
+//     return when.add(Duration(days: 1));
+//   } else {
+//     return when;
+//   }
+// }
+
 int getMilliseconds(String time) {
   int hours = int.parse(time.substring(0, 2));
   int minutes = int.parse(time.substring(3));
@@ -57,7 +70,7 @@ class _StopwatchPageState extends State<StopwatchPage> {
                 _stopwatch.elapsedMilliseconds);
       });
 
-      print("&&&&&&&&&&" + globals.eachTaskTimer[taskKey]);
+      //print("&&&&&&&&&&" + globals.eachTaskTimer[taskKey]);
       _stopwatch = Stopwatch();
       globals.statusKey = 8;
       FirebaseFirestore.instance

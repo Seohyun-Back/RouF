@@ -118,16 +118,10 @@ class _TodoListState extends State<TodoList> {
                               //     .toString())
                               .set({
                             'id': globals
-                                .todos[globals.taskList[widget.index]][
-                                    globals.eachTaskKey[
-                                            globals.taskList[widget.index]] -
-                                        1]
+                                .todos[globals.taskList[widget.index]][index]
                                 .id,
                             'todo': globals
-                                .todos[globals.taskList[widget.index]][
-                                    globals.eachTaskKey[
-                                            globals.taskList[widget.index]] -
-                                        1]
+                                .todos[globals.taskList[widget.index]][index]
                                 .todo,
                             'checked': newValue
                           });

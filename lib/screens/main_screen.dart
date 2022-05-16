@@ -1,13 +1,13 @@
+import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterfire_ui/auth.dart';
 import 'package:RouF/component/task_list.dart';
 import 'package:RouF/screens/friend_status.dart';
 import 'package:RouF/screens/sidebar/friend_list.dart';
 import 'package:RouF/screens/sidebar/friend_request.dart';
 import 'package:RouF/screens/monthly.dart';
-import 'package:provider/provider.dart';
 
 import '../../globals.dart' as globals;
 
@@ -21,6 +21,8 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   final _authentication = FirebaseAuth.instance;
   DateTime selectedDate = DateTime.now();
+  // int alarmId = 1;
+  // DateTime today = DateTime.now();
   List<String> listOfDays = ["월", "화", "수", "목", "금", "토", "일"];
 
   User? loggedUser;
@@ -236,6 +238,19 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // setState(() {
+    //   print("여기 안오나?");
+    //   AndroidAlarmManager.oneShotAt(
+    //       DateTime(today.year, today.month, today.day, 17, 04, 10),
+    //       alarmId,
+    //       alarm12);
+    // });
+    // print("g");
+    // AndroidAlarmManager.oneShotAt(
+    //     DateTime(selectedDate.year, selectedDate.month, selectedDate.day, 17,
+    //         42, 00),
+    //     alarmId,
+    //     alarm12);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
@@ -489,3 +504,64 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 }
+
+// Future<String> getUID() async {
+//   final _authentication = FirebaseAuth.instance;
+
+//   Firebase.initializeApp();
+//   User user = await _authentication.currentUser!;
+//   final _userData =
+//       await FirebaseFirestore.instance.collection('user').doc(user.uid).get();
+//   //globals.currentUsername = _userData.data()!['userName'];
+//   globals.currentUid = _userData.data()!['userUID'];
+//   //globals.currentEmail = _userData.data()!['email'];
+//   return _userData.data()!['userUID'];
+// }
+
+// void alarm12() async {
+//   DateTime today = DateTime.now();
+//   print(today.hour.toString() +
+//       " : " +
+//       today.minute.toString() +
+//       " : " +
+//       today.second.toString() +
+//       "호출됐어요!");
+//   print("currentUid : " + globals.currentUid);
+//   // var firestore = await FirebaseFirestore.instance
+//   //     .collection('user/${getUID()}/days')
+//   //     .doc(today.month.toString() + today.day.toString());
+
+//   for (int i = 0; i < globals.taskList.length; i++) {
+//     await FirebaseFirestore.instance
+//         .collection('user/${getUID()}/days')
+//         .doc(today.month.toString() + today.day.toString())
+//         .set({
+//       globals.tasks[globals.taskList[i]]:
+//           globals.eachTaskTimer[globals.taskList[i]]
+//     });
+//   }
+//   print("? " + globals.taskList.length.toString());
+//   globals.todos = [
+//     [],
+//     [],
+//     [],
+//     [],
+//     [],
+//     [],
+//     [],
+//     [],
+//   ];
+//   globals.taskList = [];
+//   globals.eachTaskKey = [0, 0, 0, 0, 0, 0, 0, 0];
+//   globals.eachTaskTimer = [
+//     "00:00",
+//     "00:00",
+//     "00:00",
+//     "00:00",
+//     "00:00",
+//     "00:00",
+//     "00:00",
+//     "00:00"
+//   ];
+//   print("이건가" + globals.taskList.toString());
+// }

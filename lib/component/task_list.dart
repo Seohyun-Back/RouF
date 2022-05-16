@@ -74,7 +74,7 @@ class _TaskListState extends State<TaskList> {
                     return Dismissible(
                       key: Key(globals.taskList[index].toString()),
                       child: Task(taskNum: index),
-                      background: Container(color: Colors.lightGreen[200]),
+                      background: Container(color: Colors.white),
                       confirmDismiss: (direction) {
                         //if(direction == DismissDirection.endToStart){
                         return showDialog(

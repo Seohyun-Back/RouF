@@ -1,12 +1,15 @@
-//import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/auth.dart';
 import 'package:RouF/screens/login_screen.dart';
-
+import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'screens/main_screen.dart';
+import 'globals.dart' as globals;
 //import 'profileSet.dart';
+
+//DateTime today = DateTime.now();
 
 const MaterialColor primaryGreen = MaterialColor(
   _greenPrimaryValue,
@@ -28,8 +31,11 @@ const int _greenPrimaryValue = 0xFF47992A;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  //await AndroidAlarmManager.initialize();
   runApp(MyApp());
 }
+
+//int alarmId = 1;
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -46,6 +52,22 @@ class MyApp extends StatelessWidget {
       home: StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
+          // bool isOn = false;
+          // if (isOn == true) {
+          // AndroidAlarmManager.oneShotAt(
+          //     DateTime(today.year, today.month, today.day + 1, 00, 00, 00),
+          //     alarmId,
+          //     alarm12);
+          // print("g");
+          // AndroidAlarmManager.oneShotAt(
+          //     DateTime(today.year, today.month, today.day, 17, 36, 00),
+          //     alarmId,
+          //     alarm12);
+          //   isOn = false;
+          // } else {
+          //   AndroidAlarmManager.cancel(alarmId);
+          //}
+
           if (snapshot.hasData) {
             return MainScreen();
           }
@@ -56,185 +78,106 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// class MyPage extends StatelessWidget {
-//   const MyPage({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: Container(
-//         child: Center(
-//           child: Column(
-//             children: <Widget>[
-//               Flexible(
-//                 child: Authentication(),
-//               )
-
-//               // Expanded(
-//               //   flex: 2,
-//               //   child: Image.asset('assets/images/logo-black.png', width: 150),
-//               // ),
-//               // Expanded(
-//               //   flex: 8,
-//               //   child: Authentication(),
-//               // ),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
+// final _authentication = FirebaseAuth.instance;
+// User? loggedUser;
+// void getCurrentUser() async {
+//   try {
+//     User user = await _authentication.currentUser!;
+//     if (user != null) {
+//       loggedUser = user;
+//     }
+//   } catch (e) {
+//     print(e);
 //   }
 // }
 
-// // Widget logo() {
-// //   return Image.asset('assets/images/logo.png', width: 150);
-// // }
-
-// class Authentication extends StatelessWidget {
-//   const Authentication({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return StreamBuilder(
-//       stream: FirebaseAuth.instance.authStateChanges(),
-//       builder: (context, snapshot) {
-//         if (!snapshot.hasData) {
-//           return SignInScreen(
-//             headerBuilder: (context, constraints, _) {
-//               return Padding(
-//                   padding: const EdgeInsets.all(20),
-//                   child: AspectRatio(
-//                     aspectRatio: 1,
-//                     child: Image.asset('assets/images/logo-black.png'),
-//                   ));
-//             },
-//             providerConfigs: [EmailProviderConfiguration()],
-//           );
-//         }
-//         // // firestore에서 프로필 정보 가져오기. 없으면 설정하도록
-//         // if (checkHasData()) {
-//         //   return ProfileSet();
-//         // }
-//         return MainScreen();
-//       },
-//     );
-//   }
-
-  // Future<bool> checkHasData() async {
-  //   final f = FirebaseFirestore.instance
-  //       .collection("PROFILE")
-  //       .doc("globals.currentUser?.uid");
-  //   var checking = await f.get(); //받아오는 방식이므로 await필요(아래거 실행늦게 하게 하려면)
-  //   return checking.exists;
-  // }
-//}
-
-// class MyApp extends StatelessWidget {
-//   const MyApp({Key? key}) : super(key: key);
-
-//   // This widget is the root of your application.
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Flutter Demo',
-//       theme: ThemeData(
-//         // This is the theme of your application.
-//         //
-//         // Try running your application with "flutter run". You'll see the
-//         // application has a blue toolbar. Then, without quitting the app, try
-//         // changing the primarySwatch below to Colors.green and then invoke
-//         // "hot reload" (press "r" in the console where you ran "flutter run",
-//         // or simply save your changes to "hot reload" in a Flutter IDE).
-//         // Notice that the counter didn't reset back to zero; the application
-//         // is not restarted.
-//         primarySwatch: Colors.blue,
-//       ),
-//       home: const MyHomePage(title: 'Flutter Demo Home Page'),
-//     );
-//   }
+// Future<String> getUserName() async {
+//   User user = await _authentication.currentUser!;
+//   final _userData =
+//       await FirebaseFirestore.instance.collection('user').doc(user.uid).get();
+//   globals.currentUsername = _userData.data()!['userName'];
+//   globals.currentUid = _userData.data()!['userUID'];
+//   globals.currentEmail = _userData.data()!['email'];
+//   return _userData.data()!['userName'];
 // }
 
-// class MyHomePage extends StatefulWidget {
-//   const MyHomePage({Key? key, required this.title}) : super(key: key);
+// Future<String> getUserEmail() async {
+//   User user = await _authentication.currentUser!;
+//   final _userData =
+//       await FirebaseFirestore.instance.collection('user').doc(user.uid).get();
 
-//   // This widget is the home page of your application. It is stateful, meaning
-//   // that it has a State object (defined below) that contains fields that affect
-//   // how it looks.
-
-//   // This class is the configuration for the state. It holds the values (in this
-//   // case the title) provided by the parent (in this case the App widget) and
-//   // used by the build method of the State. Fields in a Widget subclass are
-//   // always marked "final".
-
-//   final String title;
-
-//   @override
-//   State<MyHomePage> createState() => _MyHomePageState();
+//   return await loggedUser!.email.toString();
 // }
 
-// class _MyHomePageState extends State<MyHomePage> {
-//   int _counter = 0;
+// Future<String> getUID() async {
+//   Firebase.initializeApp();
+//   User user = await _authentication.currentUser!;
+//   final _userData =
+//       await FirebaseFirestore.instance.collection('user').doc(user.uid).get();
+//   //globals.currentUsername = _userData.data()!['userName'];
+//   globals.currentUid = _userData.data()!['userUID'];
+//   //globals.currentEmail = _userData.data()!['email'];
+//   return _userData.data()!['userUID'];
+// }
 
-//   void _incrementCounter() {
-//     setState(() {
-//       // This call to setState tells the Flutter framework that something has
-//       // changed in this State, which causes it to rerun the build method below
-//       // so that the display can reflect the updated values. If we changed
-//       // _counter without calling setState(), then the build method would not be
-//       // called again, and so nothing would appear to happen.
-//       _counter++;
-//     });
-//   }
+// Future<int> countDocuments() async {
+//   QuerySnapshot _myDoc =
+//       await FirebaseFirestore.instance.collection('user/${getUID}/tasks').get();
+//   List<DocumentSnapshot> _myDocCount = _myDoc.docs;
+//   print(_myDocCount.length);
+//   return _myDocCount.length; // Count of Documents in Collection
+// }
 
-//   @override
-//   Widget build(BuildContext context) {
-//     // This method is rerun every time setState is called, for instance as done
-//     // by the _incrementCounter method above.
-//     //
-//     // The Flutter framework has been optimized to make rerunning build methods
-//     // fast, so that you can just rebuild anything that needs updating rather
-//     // than having to individually change instances of widgets.
-//     return Scaffold(
-//       appBar: AppBar(
-//         // Here we take the value from the MyHomePage object that was created by
-//         // the App.build method, and use it to set our appbar title.
-//         title: Text(widget.title),
-//       ),
-//       body: Center(
-//         // Center is a layout widget. It takes a single child and positions it
-//         // in the middle of the parent.
-//         child: Column(
-//           // Column is also a layout widget. It takes a list of children and
-//           // arranges them vertically. By default, it sizes itself to fit its
-//           // children horizontally, and tries to be as tall as its parent.
-//           //
-//           // Invoke "debug painting" (press "p" in the console, choose the
-//           // "Toggle Debug Paint" action from the Flutter Inspector in Android
-//           // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-//           // to see the wireframe for each widget.
-//           //
-//           // Column has various properties to control how it sizes itself and
-//           // how it positions its children. Here we use mainAxisAlignment to
-//           // center the children vertically; the main axis here is the vertical
-//           // axis because Columns are vertical (the cross axis would be
-//           // horizontal).
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: <Widget>[
-//             const Text(
-//               'You have pushed the button this many times:',
-//             ),
-//             Text(
-//               '$_counter',
-//               style: Theme.of(context).textTheme.headline4,
-//             ),
-//           ],
-//         ),
-//       ),
-//       floatingActionButton: FloatingActionButton(
-//         onPressed: _incrementCounter,
-//         tooltip: 'Increment',
-//         child: const Icon(Icons.add),
-//       ), // This trailing comma makes auto-formatting nicer for build methods.
-//     );
-//   }
+// void alarm12() async {
+//   DateTime today = DateTime.now();
+//   print(today.hour.toString() +
+//       " : " +
+//       today.minute.toString() +
+//       " : " +
+//       today.second.toString() +
+//       "호출됐어요!");
+//   getCurrentUser();
+//   print("currentUid : " + globals.currentUid);
+//   await Firebase.initializeApp();
+//   // var firestore = await FirebaseFirestore.instance
+//   //     .collection('user/${getUID()}/days')
+//   //     .doc(today.month.toString() + today.day.toString());
+
+//   Future<int> taskCnt = countDocuments();
+//   // for (int i = 0; i < taskCnt; i++) {
+//   //   String task;
+//   //   String time;
+
+//   //   await FirebaseFirestore.instance
+//   //       .collection('user/${getUID()}/days')
+//   //       .doc(today.month.toString() + today.day.toString())
+//   //       .set({
+//   //     globals.tasks[globals.taskList[i]]:
+//   //         globals.eachTaskTimer[globals.taskList[i]]
+//   //   });
+//   // }
+//   print("엥? " + globals.taskList.toString());
+//   globals.todos = [
+//     [],
+//     [],
+//     [],
+//     [],
+//     [],
+//     [],
+//     [],
+//     [],
+//   ];
+//   globals.taskList = [];
+//   globals.eachTaskKey = [0, 0, 0, 0, 0, 0, 0, 0];
+//   globals.eachTaskTimer = [
+//     "00:00",
+//     "00:00",
+//     "00:00",
+//     "00:00",
+//     "00:00",
+//     "00:00",
+//     "00:00",
+//     "00:00"
+//   ];
+//   print("이건가?" + globals.taskList.toString());
 // }

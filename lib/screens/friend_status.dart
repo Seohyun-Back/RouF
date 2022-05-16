@@ -16,9 +16,9 @@ class _FriendStatusState extends State<FriendStatus> {
 
   @override
   Widget build(BuildContext context) {
-    print('\n \n currentUid는 지금 ${globals.currentUid}');
-    print('\n \n currentUsername은 지금 ${globals.currentUsername}');
-    print('\n \n currentEmail은 지금 ${globals.currentEmail}');
+    // print('\n \n currentUid는 지금 ${globals.currentUid}');
+    // print('\n \n currentUsername은 지금 ${globals.currentUsername}');
+    // print('\n \n currentEmail은 지금 ${globals.currentEmail}');
     return Container(
         padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
         child: Column(
