@@ -1,4 +1,5 @@
 //import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
+import 'package:RouF/screens/sidebar/line_diary.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -272,126 +273,119 @@ class _MainScreenState extends State<MainScreen> {
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
-            DrawerHeader(
-              child: Container(
-                  child: Column(
-                children: [
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        //flex: 2,
-                        child: CircleAvatar(
-                          radius: 27,
-                          backgroundImage:
-                              AssetImage('assets/images/profile.jpg'),
-                        ),
-                      ),
-                      Container(
-                        //flex: 8,
-                        child: Container(
-                          padding: EdgeInsets.fromLTRB(10, 6, 0, 30),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              FutureBuilder(
-                                  future: getUserName(),
-                                  builder: (BuildContext context,
-                                      AsyncSnapshot snapshot) {
-                                    if (snapshot.hasData == false) {
-                                      return CircularProgressIndicator();
-                                    } else if (snapshot.hasError) {
-                                      return Text(
-                                        'Error: ${snapshot.error}',
-                                      );
-                                    } else {
-                                      return Text(
-                                        snapshot.data.toString(),
-                                        style: TextStyle(
-                                          fontFamily: 'Mono',
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ); //Text(snapshot.data.toString());
-                                    }
-                                  }),
-                              FutureBuilder(
-                                  future: getUserEmail(),
-                                  builder: (BuildContext context,
-                                      AsyncSnapshot snapshot) {
-                                    if (snapshot.hasData == false) {
-                                      return CircularProgressIndicator();
-                                    } else if (snapshot.hasError) {
-                                      return Text(
-                                        'Error: ${snapshot.error}',
-                                      );
-                                    } else {
-                                      return Text(snapshot.data.toString(),
-                                          style: TextStyle(
-                                            fontFamily: 'Mono',
-                                            fontSize: 17,
-                                            fontWeight: FontWeight.w300,
-                                          ));
-                                    }
-                                  }),
-                            ],
+            SizedBox(
+              height: 170,
+              child: DrawerHeader(
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+                child: Container(
+                    child: Column(
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          //flex: 2,
+                          child: CircleAvatar(
+                            radius: 27,
+                            backgroundImage:
+                                AssetImage('assets/images/profile.jpg'),
                           ),
                         ),
-                      )
-                    ],
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      print('Tapped Friend List!');
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) {
-                          return FriendList();
-                        }),
-                      );
-                    },
-                    child: Container(
-                      padding: EdgeInsets.fromLTRB(7, 0, 0, 0),
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(
-                              '친구 ',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                              ),
+                        Container(
+                          //flex: 8,
+                          child: Container(
+                            padding: EdgeInsets.fromLTRB(12, 6, 0, 10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                FutureBuilder(
+                                    future: getUserName(),
+                                    builder: (BuildContext context,
+                                        AsyncSnapshot snapshot) {
+                                      if (snapshot.hasData == false) {
+                                        return CircularProgressIndicator();
+                                      } else if (snapshot.hasError) {
+                                        return Text(
+                                          'Error: ${snapshot.error}',
+                                        );
+                                      } else {
+                                        return Text(
+                                          snapshot.data.toString(),
+                                          style: TextStyle(
+                                            fontFamily: 'Mono',
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ); //Text(snapshot.data.toString());
+                                      }
+                                    }),
+                                FutureBuilder(
+                                    future: getUserEmail(),
+                                    builder: (BuildContext context,
+                                        AsyncSnapshot snapshot) {
+                                      if (snapshot.hasData == false) {
+                                        return CircularProgressIndicator();
+                                      } else if (snapshot.hasError) {
+                                        return Text(
+                                          'Error: ${snapshot.error}',
+                                        );
+                                      } else {
+                                        return Text(snapshot.data.toString(),
+                                            style: TextStyle(
+                                              fontFamily: 'Mono',
+                                              fontSize: 17,
+                                              fontWeight: FontWeight.w300,
+                                            ));
+                                      }
+                                    }),
+                              ],
                             ),
-                            FutureBuilder(
-                                future: getFriendNum(),
-                                builder: (BuildContext context,
-                                    AsyncSnapshot snapshot) {
-                                  if (snapshot.hasError) {
-                                    return Text(
-                                      'Error: ${snapshot.error}',
-                                    );
-                                  } else {
-                                    return Text(snapshot.data.toString(),
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w500,
-                                        ));
-                                  }
-                                }),
-                          ]),
+                          ),
+                        )
+                      ],
                     ),
-                  ),
-                ],
-              )),
-              decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 255, 255, 255),
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(0.0),
-                    bottomRight: Radius.circular(0.0),
-                  )),
+                    // GestureDetector(
+                    //   onTap: () {
+                    //     print('Tapped Friend List!');
+                    //     Navigator.push(
+                    //       context,
+                    //       MaterialPageRoute(builder: (context) {
+                    //         return FriendList();
+                    //       }),
+                    //     );
+                    //   },
+                    //   child: Container(
+                    //     padding: EdgeInsets.fromLTRB(7, 0, 0, 0),
+                    //     child: Row(
+                    //         mainAxisAlignment: MainAxisAlignment.start,
+                    //         children: [
+                    //           Text(
+                    //             '친구 ',
+                    //             style: TextStyle(
+                    //               fontSize: 16,
+                    //               fontWeight: FontWeight.w500,
+                    //             ),
+                    //           ),
+                    //           if (globals.currentUid == '')
+                    //             Text('0',
+                    //                 style: TextStyle(
+                    //                   fontSize: 16,
+                    //                   fontWeight: FontWeight.w500,
+                    //                 ))
+                    //           else if (globals.currentUid != '')
+                    //             friendNumStreamBuilder(),
+                    //         ]),
+                    //   ),
+                    // ),
+                  ],
+                )),
+                decoration: BoxDecoration(
+                    color: Color.fromARGB(255, 255, 255, 255),
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(0.0),
+                      bottomRight: Radius.circular(0.0),
+                    )),
+              ),
             ),
             ListTile(
               leading: Icon(
@@ -404,11 +398,51 @@ class _MainScreenState extends State<MainScreen> {
                     fontWeight: FontWeight.w500,
                   )),
               onTap: () {
-                //print("친구 is clicked");
+                print("친구 is clicked");
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) {
                     return FriendRequest();
+                  }),
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.person_rounded,
+                color: Colors.grey[850],
+              ),
+              title: Text('친구 목록',
+                  style: TextStyle(
+                    fontFamily: 'Mono',
+                    fontWeight: FontWeight.w500,
+                  )),
+              onTap: () {
+                print("친구 목록 is clicked");
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) {
+                    return FriendList();
+                  }),
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.edit_rounded,
+                color: Colors.grey[850],
+              ),
+              title: Text('한 줄 일기',
+                  style: TextStyle(
+                    fontFamily: 'Mono',
+                    fontWeight: FontWeight.w500,
+                  )),
+              onTap: () {
+                print("한 줄 일기 is clicked");
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) {
+                    return LineDiary();
                   }),
                 );
               },
@@ -424,7 +458,7 @@ class _MainScreenState extends State<MainScreen> {
                     fontWeight: FontWeight.w500,
                   )),
               onTap: () {
-                //print("Setting is clicked");
+                print("설정 is clicked");
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) {
@@ -446,7 +480,7 @@ class _MainScreenState extends State<MainScreen> {
               onTap: () {
                 globals.initGlobals();
                 FirebaseAuth.instance.signOut();
-                //print("Logout is clicked");
+                print("Logout is clicked");
               },
             ),
           ],

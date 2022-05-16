@@ -36,85 +36,102 @@ class _FriendListState extends State<FriendList> {
           centerTitle: true,
         ),
       ),
-      body: Container(
-          padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
-          child: Column(
-            children: [
-              SizedBox(
-                height: 3,
-              ),
-              StreamBuilder(
-                stream: FirebaseFirestore.instance
-                    .collection('user/${globals.currentUid}/friends')
-                    .snapshots(),
-                builder: (BuildContext context,
-                    AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-                        snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                  final docs = snapshot.data!.docs;
+      body: SafeArea(
+        child: Container(
+            padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
+            child: Column(
+              children: [
+                StreamBuilder(
+                  stream: FirebaseFirestore.instance
+                      .collection('user/${globals.currentUid}/friends')
+                      .snapshots(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                          snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    final docs = snapshot.data!.docs;
 
-                  return ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    itemCount: docs.length,
-                    itemBuilder: (context, index) {
-                      return Container(
-                          //padding:,
-                          child: ListTile(
-                        // 친구 프로필사진
-                        leading: Icon(
-                          Icons.circle,
-                          color: Colors.grey[850],
-                        ),
-                        // 친구 이름
-
-                        title: Text(docs[index]['name']),
-                        trailing: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            TextButton(
-                              child: Text(
-                                '삭제',
-                                style: TextStyle(
-                                  color: Colors.red,
-                                ),
+                    return Container(
+                        padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                        child: Center(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(20, 0, 0, 5),
+                                child: Text('친구 ${docs.length}',
+                                    style: TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.w500)),
                               ),
-                              onPressed: () async {
-                                print("친구 삭제");
-                                // 목록에서 해당 data 사라지게
-                                FirebaseFirestore.instance
-                                    .collection(
-                                        'user/${globals.currentUid}/friends')
-                                    .doc(docs[index]['email'])
-                                    .delete();
+                              ListView.builder(
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                itemCount: docs.length,
+                                itemBuilder: (context, index) {
+                                  return Container(
+                                      //padding:,
+                                      child: ListTile(
+                                    // 친구 프로필사진
+                                    leading: CircleAvatar(
+                                      radius: 18,
+                                      backgroundImage: AssetImage(
+                                          'assets/images/profile.jpg'),
+                                    ),
+                                    // 친구 이름
 
-                                globals.friendEmail =
-                                    docs[index]['email']; //2 email
-                                globals.friendUid = docs[index]['uid'];
+                                    title: Text(docs[index]['name']),
+                                    trailing: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        TextButton(
+                                          child: Text(
+                                            '삭제',
+                                            style: TextStyle(
+                                              color: Colors.red,
+                                            ),
+                                          ),
+                                          onPressed: () async {
+                                            print("친구 삭제");
+                                            // 목록에서 해당 data 사라지게
+                                            FirebaseFirestore.instance
+                                                .collection(
+                                                    'user/${globals.currentUid}/friends')
+                                                .doc(docs[index]['email'])
+                                                .delete();
 
-                                FirebaseFirestore.instance
-                                    .collection(
-                                        'user/${globals.friendUid}/friends')
-                                    .doc(globals.currentEmail)
-                                    .delete();
+                                            globals.friendEmail =
+                                                docs[index]['email']; //2 email
+                                            globals.friendUid =
+                                                docs[index]['uid'];
 
-                                globals.friendEmail = '';
-                                globals.friendUid = '';
-                              },
-                            ),
-                          ],
-                        ),
-                      ));
-                    },
-                  );
-                },
-              )
-            ],
-          )),
+                                            FirebaseFirestore.instance
+                                                .collection(
+                                                    'user/${globals.friendUid}/friends')
+                                                .doc(globals.currentEmail)
+                                                .delete();
+
+                                            globals.friendEmail = '';
+                                            globals.friendUid = '';
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ));
+                                },
+                              ),
+                            ],
+                          ),
+                        ));
+                  },
+                )
+              ],
+            )),
+      ),
     );
   }
 }

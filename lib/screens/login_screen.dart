@@ -540,14 +540,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                         },
                         child: Container(
                           decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [
-                                Colors.lightGreen,
-                                Colors.green,
-                              ],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                            ),
+                            color: Color(0xff589314),
                             borderRadius: BorderRadius.circular(30),
                             boxShadow: [
                               BoxShadow(
