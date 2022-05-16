@@ -14,6 +14,9 @@ class MonthlyWork extends StatefulWidget {
 
 class _MonthlyWorkState extends State<MonthlyWork> {
   DateTime selectedDate = DateTime.now();
+  late String dateKey = selectedDate.toString().substring(2, 4) +
+      selectedDate.toString().substring(5, 7) +
+      selectedDate.toString().substring(8, 10);
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +33,9 @@ class _MonthlyWorkState extends State<MonthlyWork> {
                     onDayPressed: (DateTime date, List<Event> events) {
                       this.setState(() => selectedDate = date);
                       print('selected date is : ${selectedDate}');
+                      dateKey = selectedDate.toString().substring(2, 4) +
+                          selectedDate.toString().substring(5, 7) +
+                          selectedDate.toString().substring(8, 10);
                     },
                     thisMonthDayBorderColor: Colors.transparent,
                     headerTextStyle: TextStyle(
@@ -47,7 +53,7 @@ class _MonthlyWorkState extends State<MonthlyWork> {
                     todayBorderColor: Colors.transparent,
                     todayButtonColor: Color.fromARGB(255, 245, 242, 242),
                     weekFormat: false,
-                    height: 420.0,
+                    height: MediaQuery.of(context).size.height * 0.42,
                     selectedDateTime: selectedDate,
                     daysHaveCircularBorder: true,
 
@@ -56,89 +62,98 @@ class _MonthlyWorkState extends State<MonthlyWork> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.fromLTRB(20, 18, 20, 20),
-                height: 400,
-                width: 320,
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.blue,
-                  ),
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                child: Text('listview 만들자'),
-                // child: Column(
-                //   children: [
-                //     StreamBuilder(
-                //       stream: FirebaseFirestore.instance
-                //           .collection('user/${globals.currentUid}/friends')
-                //           .snapshots(),
-                //       builder: (BuildContext context,
-                //           AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-                //               snapshot) {
-                //         if (snapshot.connectionState ==
-                //             ConnectionState.waiting) {
-                //           return Center(
-                //             child: CircularProgressIndicator(),
-                //           );
-                //         }
-                //         final docs = snapshot.data!.docs;
+                  //padding: EdgeInsets.fromLTRB(20, 18, 20, 20),
+                  height: MediaQuery.of(context).size.height * 0.45,
+                  width: MediaQuery.of(context).size.width,
+                  // decoration: BoxDecoration(
+                  //   border: Border.all(
+                  //     color: Colors.grey,
+                  //   ),
+                  //   borderRadius: BorderRadius.circular(10.0),
+                  // ),
+                  //child: Text('listview 만들자'),
+                  child: Column(
+                    children: [
+                      //Text(selectedDate.toString().substring(0, 10)),
+                      StreamBuilder<QuerySnapshot>(
+                        stream: FirebaseFirestore.instance
+                            .collection(
+                                'user/${globals.currentUid}/data/${dateKey}/task')
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return CircularProgressIndicator();
+                          }
+                          return Expanded(
+                              flex: 2,
+                              // height: MediaQuery.of(context).size.height * 0.4,
+                              // width: MediaQuery.of(context).size.width * 0.8,
 
-                //         return Container(
-                //           height: 218,
-                //           child: ListView.builder(
-                //             scrollDirection: Axis.vertical,
-                //             shrinkWrap: true,
-                //             itemCount: docs.length,
-                //             itemBuilder: (context, index) {
-                //               return StreamBuilder(
-                //                   stream: FirebaseFirestore.instance
-                //                       .collection('user')
-                //                       .doc('${docs[index]['uid']}')
-                //                       .snapshots(),
-                //                   builder: (BuildContext context,
-                //                       AsyncSnapshot<
-                //                               DocumentSnapshot<
-                //                                   Map<String, dynamic>>>
-                //                           snapshot2) {
-                //                     if (snapshot.connectionState ==
-                //                         ConnectionState.waiting) {
-                //                       return Center(
-                //                         child: CircularProgressIndicator(),
-                //                       );
-                //                     }
-                //                     actionKey = snapshot2.data!['statusKey'];
-
-                //                     return Container(
-                //                         //padding:,
-                //                         child: ListTile(
-                //                       horizontalTitleGap: 6.0,
-                //                       dense: true,
-                //                       // 친구 프로필사진
-                //                       leading: CircleAvatar(
-                //                         radius: 18,
-                //                         backgroundColor: Color(0xff95DF7D),
-                //                         child: Image.asset(
-                //                           'images/TaskIcon/${globals.tasks[actionKey]}.png',
-                //                           height: 20,
-                //                           width: 20,
-                //                         ),
-                //                       ),
-                //                       // 친구 이름
-                //                       title: Text(
-                //                           docs[index]['name'] +
-                //                               '는 ' +
-                //                               globals.action[actionKey],
-                //                           style: TextStyle(fontSize: 18)),
-                //                     ));
-                //                   });
-                //             },
-                //           ),
-                //         );
-                //       },
-                //     )
-                //   ],
-                // )
-              ),
+                              child: snapshot.data?.docs.length == 0
+                                  ? Container(
+                                      //padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                                      child: Center(
+                                      child: Text(
+                                        "기록된 활동이 없습니다.",
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ))
+                                  : Center(
+                                      child: ListView.builder(
+                                        shrinkWrap: true,
+                                        scrollDirection: Axis.vertical,
+                                        itemCount: snapshot.data?.docs.length,
+                                        itemBuilder: (ctx, index) => Container(
+                                          padding: EdgeInsets.all(8),
+                                          child: ListTile(
+                                            //tileColor: Color(0xfff4f4f4),
+                                            //image: "aaa",
+                                            //category: snapshot.data.docs[index]['name'],
+                                            //numOfBrands: snapshot.data.docs[index]['maxcost'],
+                                            //press: () {},
+                                            dense: true,
+                                            leading: CircleAvatar(
+                                              backgroundColor:
+                                                  Color(0xffddeacf),
+                                              child: Image.asset(
+                                                'assets/images/TaskIcon/${snapshot.data?.docs[index]['task']}.png',
+                                                height: 25,
+                                                width: 25,
+                                              ),
+                                            ),
+                                            // leading: Image(
+                                            //   width: 25,
+                                            //   height: 25,
+                                            //   image: AssetImage(
+                                            //       'assets/images/TaskIcon/${snapshot.data?.docs[index]['task']}.png'),
+                                            // ),
+                                            title: Row(children: [
+                                              Text(snapshot.data?.docs[index]
+                                                  ['task']),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              // width: MediaQuery.of(context)
+                                              //         .size
+                                              //         .width *
+                                              //     0.2),
+                                              Text(snapshot.data?.docs[index]
+                                                  ['time']),
+                                            ]),
+                                          ),
+                                        ),
+                                      ),
+                                    ));
+                        },
+                      ),
+                      Divider(
+                        //thickness: 2,
+                        color: Colors.grey,
+                      ),
+                      Expanded(flex: 1, child: Center(child: Text("한 줄 일기"))),
+                    ],
+                  )),
             ],
           ),
         ),

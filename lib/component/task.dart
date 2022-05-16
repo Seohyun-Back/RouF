@@ -88,7 +88,7 @@ class _TaskState extends State<Task> {
                         ),
                         SizedBox(width: 18),
                         Container(
-                          width: 130,
+                          width: 120,
                           child: Row(
                             children: [
                               Text(

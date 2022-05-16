@@ -67,7 +67,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                   height: 300,
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: AssetImage('assets/images/login_logo.jpg'),
+                          image: AssetImage('assets/images/logo.png'),
                           fit: BoxFit.fill)),
                   // child: Container(
                   //   padding: EdgeInsets.only(top: 90, left: 20),
