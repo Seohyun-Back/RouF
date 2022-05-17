@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_calendar_carousel/classes/event.dart';
 import 'package:RouF/globals.dart' as globals;
@@ -97,6 +98,9 @@ class _MonthlyWorkState extends State<MonthlyWork> {
                                       child: Text(
                                         "기록된 활동이 없습니다.",
                                         textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                        ),
                                       ),
                                     ))
                                   : Center(
@@ -107,11 +111,6 @@ class _MonthlyWorkState extends State<MonthlyWork> {
                                         itemBuilder: (ctx, index) => Container(
                                           padding: EdgeInsets.all(8),
                                           child: ListTile(
-                                            //tileColor: Color(0xfff4f4f4),
-                                            //image: "aaa",
-                                            //category: snapshot.data.docs[index]['name'],
-                                            //numOfBrands: snapshot.data.docs[index]['maxcost'],
-                                            //press: () {},
                                             dense: true,
                                             leading: CircleAvatar(
                                               backgroundColor:
@@ -122,12 +121,6 @@ class _MonthlyWorkState extends State<MonthlyWork> {
                                                 width: 25,
                                               ),
                                             ),
-                                            // leading: Image(
-                                            //   width: 25,
-                                            //   height: 25,
-                                            //   image: AssetImage(
-                                            //       'assets/images/TaskIcon/${snapshot.data?.docs[index]['task']}.png'),
-                                            // ),
                                             title: Row(children: [
                                               Text(snapshot.data?.docs[index]
                                                   ['task']),
@@ -147,11 +140,38 @@ class _MonthlyWorkState extends State<MonthlyWork> {
                                     ));
                         },
                       ),
-                      Divider(
-                        //thickness: 2,
-                        color: Colors.grey,
-                      ),
-                      Expanded(flex: 1, child: Center(child: Text("한 줄 일기"))),
+                      Divider(color: Colors.black),
+                      Expanded(
+                          flex: 1,
+                          child: FutureBuilder(
+                              future: getDiaryContext(),
+                              builder: (BuildContext context,
+                                  AsyncSnapshot snapshot) {
+                                //해당 부분은 data를 아직 받아 오지 못했을때 실행되는 부분을 의미한다.
+                                // if (snapshot.hasData == false) {
+                                //   return CircularProgressIndicator();
+                                // } else if (snapshot.hasError) {
+                                //   return Padding(
+                                //     padding: const EdgeInsets.all(8.0),
+                                //     child: Text(
+                                //       'Error: ${snapshot.error}',
+                                //       style: TextStyle(fontSize: 15),
+                                //     ),
+                                //   );
+                                // } else {
+                                return Container(
+                                  //padding: const EdgeInsets.all(8.0),
+                                  child: Center(
+                                    child: Text(
+                                      snapshot.data.toString(),
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(fontSize: 14),
+                                    ),
+                                  ),
+                                );
+                                //}
+                              }))
+                      // child: Center(child: Text(getDiaryContext()))),
                     ],
                   )),
             ],
@@ -159,5 +179,21 @@ class _MonthlyWorkState extends State<MonthlyWork> {
         ),
       ),
     );
+  }
+
+  Future<String> getDiaryContext() async {
+    String context = '';
+    final diarycontext = await FirebaseFirestore.instance
+        .collection('user/${globals.currentUid}/data/${dateKey}/diary')
+        .doc('diary')
+        .get();
+    print(diarycontext.data());
+    if (diarycontext.data() != null) {
+      context = diarycontext.data()!['content'];
+    } else {
+      context = "기록된 일기가 없습니다.";
+    }
+
+    return context;
   }
 }

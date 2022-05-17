@@ -76,7 +76,7 @@ class _LineDiaryState extends State<LineDiary> {
                 ),
                 onPressed: () {
                   diaryContent = _textController.text;
-                  //_textController.text = '';
+                  _textController.text = '';
                   print(globals.currentUid);
                   print(diaryContent);
                   FirebaseFirestore.instance
@@ -86,9 +86,9 @@ class _LineDiaryState extends State<LineDiary> {
                       .set({
                     'content': diaryContent,
                   });
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text("오늘의 일기가 작성되었습니다."),
-                  ));
+                  // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  //   content: Text("오늘의 일기가 작성되었습니다."),
+                  // ));
                 },
                 child: Text('작성하기/다시쓰기'),
               )
