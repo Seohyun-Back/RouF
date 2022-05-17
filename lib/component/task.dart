@@ -40,7 +40,7 @@ class _TaskState extends State<Task> {
 
                 decoration: BoxDecoration(
                   color: widget.selected == true
-                      ? Color(0xffD6D6D6)
+                      ? Color(0xffDFDFDF)
                       : Color(0xfff4f4f4),
                   borderRadius: new BorderRadius.only(
                       topLeft: const Radius.circular(20.0),

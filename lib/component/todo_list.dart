@@ -93,7 +93,7 @@ class _TodoListState extends State<TodoList> {
         future: todoFuture,
         builder: (context, snapshot) {
           return Container(
-            color: widget.selected ? Color(0xffD6D6D6) : Color(0xfff4f4f4),
+            color: widget.selected ? Color(0xffDFDFDF) : Color(0xfff4f4f4),
             //child: IgnorePointer(
             child: ListView.builder(
               shrinkWrap: true,

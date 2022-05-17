@@ -41,6 +41,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
     globals.currentUsername = _userData.data()!['userName'];
     globals.currentUid = _userData.data()!['userUID'];
     globals.currentEmail = _userData.data()!['email'];
+    //globals.statusKey = _userData.data()!['statusKey'];
     print(
         'currentUsername: ${globals.currentUsername} \n currentUserUid: ${globals.currentUid} \n currentUserEmail: ${globals.currentEmail}');
   }
