@@ -54,7 +54,9 @@ class _ChangePasswordState extends State<ChangePassword> {
                     primary: Colors.green,
                   ),
                   onPressed: () {
-                    print("사용자 정보 변경은 준비중인 기능입니다.");
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text("사용자 정보 변경은 준비중인 기능입니다."),
+                    ));
                     //_handleSubmitted;
                     Navigator.pop(context);
                   },
