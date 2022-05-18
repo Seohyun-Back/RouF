@@ -54,7 +54,8 @@ class _TaskListState extends State<TaskList> {
         future: myFuture,
         builder: (context, snapshot) {
           return Container(
-              height: MediaQuery.of(context).size.height * 0.45,
+              height: MediaQuery.of(context).size.height * 0.55,
+              width: MediaQuery.of(context).size.width * 0.9,
               padding: EdgeInsets.symmetric(vertical: 10),
               color: Colors.white,
               child: globals.taskList.length != 0
@@ -63,8 +64,6 @@ class _TaskListState extends State<TaskList> {
                         shrinkWrap: true,
                         itemCount: globals.taskList.length,
                         itemBuilder: (context, index) {
-                          print("빰빰");
-                          print(globals.taskList.length);
                           //print("globals.taskList.length : " +
                           //    globals.taskList.length.toString());
                           if (globals.taskList.length == 0) {

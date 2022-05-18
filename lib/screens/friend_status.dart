@@ -20,6 +20,8 @@ class _FriendStatusState extends State<FriendStatus> {
     // print('\n \n currentUsername은 지금 ${globals.currentUsername}');
     // print('\n \n currentEmail은 지금 ${globals.currentEmail}');
     return Container(
+        height: MediaQuery.of(context).size.height * 0.37,
+        width: MediaQuery.of(context).size.width * 0.9,
         padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
         child: Column(
           children: [
@@ -31,9 +33,10 @@ class _FriendStatusState extends State<FriendStatus> {
                   AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(
-                    child: Text('친구를 추가하고 실시간으로 친구들과 일상을 공유해보세요!',
-                        style: TextStyle(
-                            fontSize: 11, fontWeight: FontWeight.w200)),
+                    // child: Text('친구를 추가하고 실시간으로 친구들과 일상을 공유해보세요!',
+                    //     style: TextStyle(
+                    //         fontSize: 11, fontWeight: FontWeight.w200)),
+                    child: Container(),
                   );
                   // return Center(
                   //   child: CircularProgressIndicator(),
@@ -50,11 +53,15 @@ class _FriendStatusState extends State<FriendStatus> {
                           itemCount: docs.length,
                           itemBuilder: (context, index) {
                             if (docs.length == 0)
-                              return Center(
-                                child: Text('친구를 추가하고 실시간으로 친구들과 일상을 공유해보세요!',
-                                    style: TextStyle(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.w200)),
+                              return Container(
+                                //height: 300,
+                                alignment: Alignment.bottomCenter,
+                                child: Center(
+                                  child: Text('친구를 추가하고 실시간으로 친구들과 일상을 공유해보세요!',
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w200)),
+                                ),
                               );
                             else
                               return StreamBuilder(

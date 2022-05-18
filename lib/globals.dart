@@ -85,6 +85,7 @@ List<String> action = [
 ];
 
 void initGlobals() {
+  statusKey = 8;
   currentUsername = '';
   currentUid = '';
   currentEmail = '';

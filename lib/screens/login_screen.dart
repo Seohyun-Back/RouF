@@ -211,7 +211,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                                   key: ValueKey(1),
                                   validator: (value) {
                                     if (value!.isEmpty || value.length < 4) {
-                                      return 'Please enter at least 4 characters';
+                                      return '4 글자 이상 입력하세요';
                                     }
                                     return null;
                                   },
@@ -256,7 +256,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                                   validator: (value) {
                                     if (value!.isEmpty ||
                                         !value.contains('@')) {
-                                      return 'Please enter a valid address.';
+                                      return '유효하지 않은 이메일입니다.';
                                     }
                                     return null;
                                   },
@@ -300,7 +300,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                                   key: ValueKey(3),
                                   validator: (value) {
                                     if (value!.isEmpty || value.length < 6) {
-                                      return 'Password must be at least 7 characters long.';
+                                      return '7자리 이상의 문자를 입력하세요.';
                                     }
                                     return null;
                                   },
@@ -352,7 +352,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                                     key: ValueKey(4),
                                     validator: (value) {
                                       if (value!.isEmpty || value.length < 6) {
-                                        return 'Please enter a valid address.';
+                                        return '유효하지 않은 이메일입니다.';
                                       }
                                       return null;
                                     },
@@ -396,7 +396,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                                     key: ValueKey(5),
                                     validator: (value) {
                                       if (value!.isEmpty || value.length < 6) {
-                                        return 'Password must be at least 7 characters long.';
+                                        return '7자리 이상의 문자를 입력하세요.';
                                       }
                                       return null;
                                     },
@@ -456,9 +456,9 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                           borderRadius: BorderRadius.circular(50)),
                       child: GestureDetector(
                         onTap: () async {
-                          setState(() {
-                            showSpinner = true;
-                          });
+                          // setState(() {
+                          //   showSpinner = true;
+                          // });
                           if (isSignupScreen) {
                             _tryValidation();
                             try {
@@ -499,8 +499,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                               if (mounted) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
-                                    content: Text(
-                                        'Please check your email and password'),
+                                    content: Text('잘못된 이메일 혹은 비밀번호입니다'),
                                     backgroundColor: Colors.blue,
                                   ),
                                 );

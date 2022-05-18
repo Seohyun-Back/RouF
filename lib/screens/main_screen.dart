@@ -1,4 +1,6 @@
 //import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
+import 'dart:math';
+
 import 'package:RouF/screens/sidebar/line_diary.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -432,8 +434,12 @@ class _MainScreenState extends State<MainScreen> {
                     fontWeight: FontWeight.w500,
                   )),
               onTap: () {
-                globals.initGlobals();
+                FirebaseFirestore.instance
+                    .collection('user')
+                    .doc(globals.currentUid)
+                    .update({'statusKey': 8});
                 FirebaseAuth.instance.signOut();
+                globals.initGlobals();
                 print("Logout is clicked");
               },
             ),
@@ -457,36 +463,39 @@ class _MainScreenState extends State<MainScreen> {
             height: 10,
           ),
           Center(
-            child: Container(
-              //친구상태창
-              height: MediaQuery.of(context).size.height * 0.37,
-              width: MediaQuery.of(context).size.width * 0.9,
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.transparent,
-                ),
-              ),
-              child: FutureBuilder(
-                  future: getUID(),
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    if (snapshot.hasData == false) {
-                      return Text('친구를 추가하고 실시간으로 친구들과 일상을 공유해보세요!',
-                          style: TextStyle(
-                              fontSize: 10, fontWeight: FontWeight.w200));
-                      // CircularProgressIndicator();
-                    } else if (snapshot.hasError) {
-                      return Text(
-                        'Error: ${snapshot.error}',
-                      );
-                    } else {
-                      return FriendStatus();
-                    } //Text(snapshot.data.toString());
-                  }),
-            ),
+            child: Expanded(
+                //친구상태창
+                // height: MediaQuery.of(context).size.height * 0.37,
+                // width: MediaQuery.of(context).size.width * 0.8,
+                flex: 2,
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.transparent,
+                    ),
+                  ),
+                  child: FutureBuilder(
+                      future: getUID(),
+                      builder: (BuildContext context, AsyncSnapshot snapshot) {
+                        if (snapshot.hasData == false) {
+                          return Text('친구를 추가하고 실시간으로 친구들과 일상을 공유해보세요!',
+                              style: TextStyle(
+                                  fontSize: 10, fontWeight: FontWeight.w200));
+                          // CircularProgressIndicator();
+                        } else if (snapshot.hasError) {
+                          return Text(
+                            'Error: ${snapshot.error}',
+                          );
+                        } else {
+                          return FriendStatus();
+                        } //Text(snapshot.data.toString());
+                      }),
+                )),
           ),
-          Container(
-            height: MediaQuery.of(context).size.height * 0.48,
-            width: MediaQuery.of(context).size.width * 0.9,
+          Expanded(
+            flex: 3,
+            // height: MediaQuery.of(context).size.height * 0.48,
+            // width: MediaQuery.of(context).size.width * 0.9,
             child: TaskList(),
           ),
         ]),

@@ -35,7 +35,7 @@ class _TaskState extends State<Task> {
             Center(
               child: Container(
                 padding: EdgeInsets.fromLTRB(15, 10, 0, 17),
-                width: MediaQuery.of(context).size.width * 0.8,
+                width: MediaQuery.of(context).size.width * 0.9,
                 //height: 150,
 
                 decoration: BoxDecoration(
@@ -63,7 +63,9 @@ class _TaskState extends State<Task> {
                         ),
                         SizedBox(width: 18),
                         Container(
-                          width: MediaQuery.of(context).size.width * 0.5,
+                          width: MediaQuery.of(context).size.width > 500
+                              ? MediaQuery.of(context).size.width * 0.5
+                              : MediaQuery.of(context).size.width * 0.25,
                           child: Row(
                             children: [
                               Text(
