@@ -242,19 +242,6 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // setState(() {
-    //   print("여기 안오나?");
-    //   AndroidAlarmManager.oneShotAt(
-    //       DateTime(today.year, today.month, today.day, 17, 04, 10),
-    //       alarmId,
-    //       alarm12);
-    // });
-    // print("g");
-    // AndroidAlarmManager.oneShotAt(
-    //     DateTime(selectedDate.year, selectedDate.month, selectedDate.day, 17,
-    //         42, 00),
-    //     alarmId,
-    //     alarm12);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
@@ -344,39 +331,6 @@ class _MainScreenState extends State<MainScreen> {
                         )
                       ],
                     ),
-                    // GestureDetector(
-                    //   onTap: () {
-                    //     print('Tapped Friend List!');
-                    //     Navigator.push(
-                    //       context,
-                    //       MaterialPageRoute(builder: (context) {
-                    //         return FriendList();
-                    //       }),
-                    //     );
-                    //   },
-                    //   child: Container(
-                    //     padding: EdgeInsets.fromLTRB(7, 0, 0, 0),
-                    //     child: Row(
-                    //         mainAxisAlignment: MainAxisAlignment.start,
-                    //         children: [
-                    //           Text(
-                    //             '친구 ',
-                    //             style: TextStyle(
-                    //               fontSize: 16,
-                    //               fontWeight: FontWeight.w500,
-                    //             ),
-                    //           ),
-                    //           if (globals.currentUid == '')
-                    //             Text('0',
-                    //                 style: TextStyle(
-                    //                   fontSize: 16,
-                    //                   fontWeight: FontWeight.w500,
-                    //                 ))
-                    //           else if (globals.currentUid != '')
-                    //             friendNumStreamBuilder(),
-                    //         ]),
-                    //   ),
-                    // ),
                   ],
                 )),
                 decoration: BoxDecoration(
@@ -492,52 +446,51 @@ class _MainScreenState extends State<MainScreen> {
           onPressed: () {
             addCategory(context);
           }),
-      body: SafeArea(
-        child: Container(
-          padding: EdgeInsets.fromLTRB(5, 5, 0, 0),
-          // child: SingleChildScrollView(
-          //   scrollDirection: Axis.vertical,
-          child: Column(children: [
-            Container(
-                padding: EdgeInsets.fromLTRB(25, 0, 0, 0),
-                child: tapableDate()),
-            const SizedBox(
-              height: 10,
-            ),
-            Center(
-              child: Container(
-                //친구상태창
-                height: 220,
-                width: 330,
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.transparent,
-                  ),
+      body: Container(
+        padding: EdgeInsets.fromLTRB(5, 5, 0, 0),
+        // child: SingleChildScrollView(
+        //   scrollDirection: Axis.vertical,
+        child: Column(children: [
+          Container(
+              padding: EdgeInsets.fromLTRB(25, 0, 0, 0), child: tapableDate()),
+          const SizedBox(
+            height: 10,
+          ),
+          Center(
+            child: Container(
+              //친구상태창
+              height: MediaQuery.of(context).size.height * 0.37,
+              width: MediaQuery.of(context).size.width * 0.9,
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.transparent,
                 ),
-                child: FutureBuilder(
-                    future: getUID(),
-                    builder: (BuildContext context, AsyncSnapshot snapshot) {
-                      if (snapshot.hasData == false) {
-                        return Text('친구를 추가하고 실시간으로 친구들과 일상을 공유해보세요!',
-                            style: TextStyle(
-                                fontSize: 10, fontWeight: FontWeight.w200));
-                        // CircularProgressIndicator();
-                      } else if (snapshot.hasError) {
-                        return Text(
-                          'Error: ${snapshot.error}',
-                        );
-                      } else {
-                        return FriendStatus();
-                      } //Text(snapshot.data.toString());
-                    }),
               ),
+              child: FutureBuilder(
+                  future: getUID(),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (snapshot.hasData == false) {
+                      return Text('친구를 추가하고 실시간으로 친구들과 일상을 공유해보세요!',
+                          style: TextStyle(
+                              fontSize: 10, fontWeight: FontWeight.w200));
+                      // CircularProgressIndicator();
+                    } else if (snapshot.hasError) {
+                      return Text(
+                        'Error: ${snapshot.error}',
+                      );
+                    } else {
+                      return FriendStatus();
+                    } //Text(snapshot.data.toString());
+                  }),
             ),
-            SafeArea(
-              child: TaskList(),
-            )
-          ]),
-          // ),
-        ),
+          ),
+          Container(
+            height: MediaQuery.of(context).size.height * 0.48,
+            width: MediaQuery.of(context).size.width * 0.9,
+            child: TaskList(),
+          ),
+        ]),
+        // ),
       ),
     );
   }
