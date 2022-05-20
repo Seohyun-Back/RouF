@@ -1,5 +1,4 @@
-import 'package:RouF/screens/sidebar/settings_category/mypage_category/changeEmail.dart';
-import 'package:RouF/screens/sidebar/settings_category/mypage_category/changeUserId.dart';
+import 'package:RouF/screens/sidebar/settings_category/mypage_category/changeUserName.dart';
 import 'package:flutter/material.dart';
 import 'package:RouF/globals.dart' as globals;
 
@@ -73,7 +72,7 @@ class MyPage extends StatelessWidget {
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 10.0, vertical: 0.0),
                             horizontalTitleGap: 5.0,
-                            title: Text('아이디',
+                            title: Text('닉네임',
                                 style: TextStyle(
                                   fontFamily: 'Mono',
                                   fontWeight: FontWeight.w400,
@@ -84,7 +83,7 @@ class MyPage extends StatelessWidget {
                               size: 13,
                             ),
                             onTap: () {
-                              print("아이디 is clicked");
+                              print("닉네임 is clicked");
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(builder: (context) {
@@ -93,31 +92,31 @@ class MyPage extends StatelessWidget {
                               );
                             },
                           ),
-                          Divider(),
-                          ListTile(
-                              visualDensity: VisualDensity(vertical: -3.0),
-                              contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 10.0, vertical: 0),
-                              horizontalTitleGap: 5.0,
-                              title: Text('이메일',
-                                  style: TextStyle(
-                                    fontFamily: 'Mono',
-                                    fontWeight: FontWeight.w400,
-                                  )),
-                              trailing: Icon(
-                                Icons.arrow_forward_ios_rounded,
-                                color: Colors.black,
-                                size: 13,
-                              ),
-                              onTap: () {
-                                print("이메일 is clicked");
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) {
-                                    return ChangeEmail();
-                                  }),
-                                );
-                              }),
+                          // Divider(),
+                          // ListTile(
+                          //     visualDensity: VisualDensity(vertical: -3.0),
+                          //     contentPadding: EdgeInsets.symmetric(
+                          //         horizontal: 10.0, vertical: 0),
+                          //     horizontalTitleGap: 5.0,
+                          //     title: Text('이메일',
+                          //         style: TextStyle(
+                          //           fontFamily: 'Mono',
+                          //           fontWeight: FontWeight.w400,
+                          //         )),
+                          //     trailing: Icon(
+                          //       Icons.arrow_forward_ios_rounded,
+                          //       color: Colors.black,
+                          //       size: 13,
+                          //     ),
+                          //     onTap: () {
+                          //       print("이메일 is clicked");
+                          //       Navigator.push(
+                          //         context,
+                          //         MaterialPageRoute(builder: (context) {
+                          //           return ChangeEmail();
+                          //         }),
+                          //       );
+                          //     }),
                           Divider(),
                           ListTile(
                             // minVerticalPadding: -10.0,

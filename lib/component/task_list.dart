@@ -98,7 +98,6 @@ class _TaskListState extends State<TaskList> {
                               ),
                               background: Container(color: Colors.white),
                               confirmDismiss: (direction) {
-                                //if(direction == DismissDirection.endToStart){
                                 return showDialog(
                                     context: context,
                                     builder: (ctx) {
@@ -137,8 +136,17 @@ class _TaskListState extends State<TaskList> {
                                                         0.0),
                                               ),
                                               onPressed: () {
-                                                return Navigator.of(context)
-                                                    .pop(true);
+                                                if (selectedIndex == index) {
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(SnackBar(
+                                                          content: Text(
+                                                              "실행중인 카테고리는 삭제할 수 없습니다.")));
+                                                  return Navigator.of(context)
+                                                      .pop(false);
+                                                } else {
+                                                  return Navigator.of(context)
+                                                      .pop(true);
+                                                }
                                               },
                                               child: const Text('삭제',
                                                   style: TextStyle(
